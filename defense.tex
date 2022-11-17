@@ -1,0 +1,66 @@
+%% defense.tex
+%% Copyright 2022 Tom M. Ragonneau
+%
+% This work may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License, either version 1.3
+% of this license or (at your option) any later version.
+% The latest version of this license is in
+%   http://www.latex-project.org/lppl.txt
+% and version 1.3 or later is part of all distributions of LaTeX
+% version 2005/12/01 or later.
+%
+% This work has the LPPL maintenance status `maintained'.
+%
+% The Current Maintainer of this work is Tom M. Ragonneau.
+\documentclass{polyu-presentation}
+\usepackage{microtype}
+
+% List of hyphenation exceptions for US English
+% Source: https://ctan.org/tex-archive/info/digests/tugboat/hyphenex
+\input{ushyphex}
+
+% Bibliographical resources
+\addbibresource{ragonneau-bib/strings.bib}
+\addbibresource{ragonneau-bib/optim.bib}
+
+% Dedicated mathematical macros
+\newcommand{\con}[1]{c_{#1}}
+\newcommand{\ieq}{\mathcal{E}}
+\newcommand{\iub}{\mathcal{I}}
+\newcommand{\lag}{\mathcal{L}}
+\newcommand{\obj}{f}
+
+\title{Model-Based DFO Methods and Software}
+\subtitle{Ph.D. thesis defense}
+\author[Tom M. Ragonneau]{\texorpdfstring{
+    Tom M. Ragonneau\\
+    \footnotesize Co-supervised by Dr.\ Zaikun Zhang and Prof.\ Xiaojun Chen
+}{Tom M. Ragonneau}}
+\institute[PolyU AMA]{
+    Department of Applied Mathematics\\
+    The Hong Kong Polytechnic University
+}
+\date{December 6, 2022}
+\titlegraphic{}
+
+\begin{document}
+
+\begin{frame}
+	\titlepage
+\end{frame}
+
+\begin{frame}
+    \frametitle{Table of contents}
+    
+	\tableofcontents[hideallsubsections]
+\end{frame}
+
+\appendix
+
+\begin{frame}[t,allowframebreaks]
+    \frametitle{References}
+
+	\printbibliography
+\end{frame}
+
+\end{document}
