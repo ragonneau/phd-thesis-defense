@@ -24,11 +24,57 @@
 \addbibresource{ragonneau-bib/optim.bib}
 
 % Dedicated mathematical macros
+\newcommand{\auglag}{\mathcal{L}_{\mathsf{A}}}
+\newcommand{\auglagalt}{\widetilde{\mathcal{L}}_{\mathsf{A}}}
 \newcommand{\con}[1]{c_{#1}}
+\newcommand{\conm}[2][]{\hat{c}_{#2}\ifthenelse{\equal{#1}{}}{}{^{#1}}}
+\newcommand{\fset}{\Omega}
 \newcommand{\ieq}{\mathcal{E}}
 \newcommand{\iub}{\mathcal{I}}
-\newcommand{\lag}{\mathcal{L}}
+\newcommand{\iter}[1][]{x\ifthenelse{\equal{#1}{}}{}{^{#1}}}
+\newcommand{\lag}[1][]{\mathcal{L}\ifthenelse{\equal{#1}{}}{}{^{#1}}}
+\newcommand{\lagalt}[1][]{\widetilde{\mathcal{L}}\ifthenelse{\equal{#1}{}}{}{^{#1}}}
+\newcommand{\lagm}[1][]{\widehat{\mathcal{L}}\ifthenelse{\equal{#1}{}}{}{^{#1}}}
+\newcommand{\lagp}[1][]{L\ifthenelse{\equal{#1}{}}{}{_{#1}}}
+\newcommand{\lm}[1][]{\lambda\ifthenelse{\equal{#1}{}}{}{^{#1}}}
+\newcommand{\merit}[1][]{\varphi\ifthenelse{\equal{#1}{}}{}{^{#1}}}
+\newcommand{\meritm}[1][]{\widehat{\varphi}\ifthenelse{\equal{#1}{}}{}{^{@@#1}}}
+\newcommand{\nstep}[1][]{n\ifthenelse{\equal{#1}{}}{}{^{#1}}}
+\newcommand{\nstepalt}[1][]{\bar{n}\ifthenelse{\equal{#1}{}}{}{^{#1}}}
 \newcommand{\obj}{f}
+\newcommand{\objm}[1][]{\hat{f}\ifthenelse{\equal{#1}{}}{}{^{#1}}}
+\newcommand{\objmalt}[1][]{\tilde{f}\ifthenelse{\equal{#1}{}}{}{^{#1}}}
+\newcommand{\pstep}[1][]{p\ifthenelse{\equal{#1}{}}{}{^{#1}}}
+\newcommand{\rad}[1][]{\Delta\ifthenelse{\equal{#1}{}}{}{@\!^{#1}}}
+\newcommand{\radlb}[1][]{\delta\ifthenelse{\equal{#1}{}}{}{^{#1}}}
+\newcommand{\ratio}[1][]{\rho\ifthenelse{\equal{#1}{}}{}{^{#1}}}
+\newcommand{\rstep}[1][]{r\ifthenelse{\equal{#1}{}}{}{^{#1}}}
+\newcommand{\sstep}[1][]{s\ifthenelse{\equal{#1}{}}{}{^{#1}}}
+\newcommand{\step}[1][]{d\ifthenelse{\equal{#1}{}}{}{^{#1}}}
+\newcommand{\tstep}[1][]{t\ifthenelse{\equal{#1}{}}{}{^{#1}}}
+\newcommand{\xl}{l}
+\newcommand{\xpb}[1][]{\mathcal{P}}
+\newcommand{\xpt}[1][]{\mathcal{Y}\ifthenelse{\equal{#1}{}}{}{^{#1}}}
+\newcommand{\xsv}[1][]{\mathcal{S}}
+\newcommand{\xu}{u}
+
+% Performance and data profiles
+\usepackage{xstring}
+\newcommand{\drawprofiles}[4]{%
+    \def\selectsolvers{#2}%
+    \def\selectcsv{figures/#3}%
+    \def\selectprofile{#4}%
+    \ifthenelse{\equal{#1}{performance}}{%
+        \def\selectxlabel{$\log_2(\alpha)$}%
+        \def\selectylabel{Performance profiles~$\rho_s(\alpha)$}%
+    }{%
+        \def\selectxlabel{Number of simplex gradients~$\alpha$}%
+        \def\selectylabel{Data profiles~$d_s(\alpha)$}%
+    }
+    \input{figures/profiles.tex}%
+}
+\newcommand{\drawperformanceprofiles}[3]{\drawprofiles{performance}{#1}{#2}{#3}}
+\newcommand{\drawdataprofiles}[3]{\drawprofiles{data}{#1}{#2}{#3}}
 
 \title{Model-Based DFO Methods and Software}
 \subtitle{Ph.D. thesis defense}

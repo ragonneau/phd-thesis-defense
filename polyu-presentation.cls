@@ -80,16 +80,21 @@
 \RequirePackage{amsfonts}
 \RequirePackage{amssymb}
 \RequirePackage{mathtools}
-\RequirePackage{dsfont}
+\RequirePackage{bm}
+\RequirePackage[scr=boondoxo,bb=dsfontserif]{mathalfa}
 \RequirePackage{empheq}
+\DeclareMathOperator{\act}{\mathcal{A}}
+\DeclareMathOperator*{\argmax}{arg\,max}
 \DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator{\bigo}{\mathcal{O}}
 \DeclareMathOperator{\card}{card}
+\DeclareMathOperator{\cond}{\kappa}
 \DeclareMathOperator{\conv}{conv}
-\DeclareMathOperator{\diam}{diam}
 \DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\smallo}{o}
+\DeclareMathOperator{\vspan}{span}
 \newcommand{\eqdef}{\mathrel{\stackrel{\mathsf{def}}{=}}}
-\newcommand{\R}{\mathds{R}}
-\newcommand{\T}{\mathsf{T}}
 \newcommand{\abs}[2][]{#1\lvert#2#1\rvert}
 \newcommand{\ceil}[2][]{#1\lceil#2#1\rceil}
 \newcommand{\floor}[2][]{#1\lfloor#2#1\rfloor}
@@ -98,6 +103,20 @@
 \newcommand{\posp}[2][]{#1[#2#1]_+}
 \newcommand{\set}[2][]{#1\{#2#1\}}
 \newcommand{\inner}[2][]{#1\langle#2#1\rangle}
+\newcommand{\eu}{\mathrm{e}}
+\newcommand{\iu}{\mathrm{i}}
+\newcommand{\du}{\mathrm{d}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\T}{\mathsf{T}}
+
+% Fine-tuning spacing in formulas
+% Make @ behave as per catcode 13 (active). The TeXbook, p. 155.
+\mathcode`@="8000{\catcode`\@=\active\gdef@{\mkern1mu}}
 
 % TikZ
 \RequirePackage{tikz}
