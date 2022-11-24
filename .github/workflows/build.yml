@@ -38,7 +38,5 @@ jobs:
       - name: Store artifacts
         uses: actions/upload-artifact@v3
         with:
-          path: |
-            *.pdf
-            figures/*.pdf
+          path: "*.pdf"
           if-no-files-found: error

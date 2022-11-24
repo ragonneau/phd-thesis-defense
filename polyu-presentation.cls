@@ -156,10 +156,10 @@
         tick label style={font=\footnotesize},
     },
 }
-\pgfkeys{/pgf/images/include external/.code=\includegraphics{#1}}
-\tikzexternalize[
-    prefix=figures/,
-]
+% \pgfkeys{/pgf/images/include external/.code=\includegraphics{#1}}
+% \tikzexternalize[
+%     prefix=figures/,
+% ]
 
 % Alert text
 \setbeamercolor{alerted text}{fg=RedViolet}

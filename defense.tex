@@ -87,7 +87,7 @@
     The Hong Kong Polytechnic University
 }
 \date{December 6, 2022}
-\titlegraphic{}
+\titlegraphic{\href{https://www.tomragonneau.com/}{\includegraphics[width=0.8in]{images/qr/personal.png}}}
 
 \begin{document}
 
@@ -99,6 +99,79 @@
     \frametitle{Table of contents}
     
 	\tableofcontents[hideallsubsections]
+\end{frame}
+
+\begin{frame}
+    \frametitle{A Byrd-Omojokun approach}
+
+    To define the \alert{trial step}~$\step[k]$, we decompose~$\step[k] = \nstep[k] + \tstep[k]$, where
+    \begin{enumerate}
+        \item the \alert{normal step}~$\nstep[k]$ reduces the (possible) constraint violation, and
+        \item the \alert{tangential step}~$\tstep[k]$ reduces the objective function of the subproblem.
+    \end{enumerate}
+    
+    \begin{columns}
+        \begin{column}{0.45\textwidth}
+            \begin{center}
+                \begin{tikzpicture}
+                    % Linear constraints
+                    \uncover<1-6>{\fill[color=RoyalBlue,opacity=0.4] (-4,-1) -- (-1.5,-1) -- (-0.5,4) -- (-4,4) -- cycle;}
+                    \uncover<7>{\fill[color=RoyalBlue,opacity=0.4] (-4,-1) -- (-2.1,-1) -- (-1.1,4) -- (-4,4) -- cycle;}
+                    \uncover<1,2>{\fill[color=RoyalBlue,opacity=0.4] (-4,1) -- (0,4) -- (-4,4) -- cycle;}
+                    \uncover<3->{\fill[color=RoyalBlue,opacity=0.4] (-4,0.125) -- (1,3.875) -- (1,4) -- (-4,4) -- cycle;}
+        
+                    % Trust regions
+                    \begin{scope}
+                        \clip (-4,-1) rectangle (1,4);
+                        \draw[fill=Dandelion,draw opacity=0.7,fill opacity=0.5] (0,0) circle (3);
+                        \draw[densely dotted,fill=Dandelion,opacity=0.7] (0,0) circle (2.5);
+                    \end{scope}
+        
+                    % Feasible region for the tangential subproblem
+                    \begin{scope}
+                        \clip (-4,0.125) -- (-27/34,43/17) -- (-0.5,4) -- (-4,4) -- cycle;
+                        \uncover<4-6>{\fill[pattern=north west lines,opacity=0.7] (0,0) circle (3);}
+                    \end{scope}
+                    \begin{scope}
+                        \clip (-4,0.125) -- (-1.5,2) -- (-1.1,4) -- (-4,4) -- cycle;
+                        \uncover<7>{\fill[pattern=north west lines,opacity=0.7] (0,0) circle (3);}
+                    \end{scope}
+        
+                    % Frame and annotations
+                    \uncover<5>{
+                        \draw[-stealth,thick,OliveGreen] (-1.5,2) -- (-0.9,2.7);
+                        \draw[-stealth,thick] (0,0) -- (-0.9,2.7);
+                        \node[below,xshift=5pt,text=OliveGreen] at (-1.2,2.35) {$\tstep[k]$};
+                        \node[above right] at (-0.45,1.35) {$\step[k]$};
+                    }
+                    \uncover<2->{
+                        \draw[-stealth,thick,Mahogany] (0,0) -- (-1.5,2);
+                        \node[below left,text=Mahogany] at (-0.75,1) {$\nstep[k]$};
+                    }
+                    \draw[fill] (0,0) circle (1.4pt) node[below right] {$\iter[k]$};
+                    \draw[thick] (-4,-1) rectangle (1,4);
+                \end{tikzpicture}
+            \end{center}
+        \end{column}
+        \begin{column}{0.55\textwidth}
+            \begin{tikzpicture}
+                \draw[fill=Dandelion,draw opacity=0.7,fill opacity=0.5] (0,0) circle (.2);
+                \node[right] at (.4,0) {Trust region};
+                \draw[densely dotted,fill=Dandelion,opacity=0.7] (0,-0.6) circle (.2);
+                \node[right] at (.4,-0.6) {Reduced trust region};
+                \fill[color=RoyalBlue,opacity=0.4] (-.2,-1.4) rectangle (.2,-1);
+                \node[right] at (.4,-1.2) {Linear constraints};
+                \uncover<4->{
+                    \fill[pattern=north west lines,opacity=0.7] (-.2,-2) rectangle (.2,-1.6);
+                    \node[right] at (.4,-1.8) {Feasible region for~$\tstep[k]$};
+                }
+            \end{tikzpicture}
+
+            \bigskip
+
+            Our \alert<1-6>{new} approach vs. the \alert<7>{standard}\footfullcite{Conn_Gould_Toint_2000} one.
+        \end{column}
+    \end{columns}
 \end{frame}
 
 \appendix
