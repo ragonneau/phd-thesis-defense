@@ -148,9 +148,6 @@
             rounded corners,
             thick,
             draw=black!15,
-            % fill opacity=0.8,
-            % draw opacity=1,
-            % text opacity=1,
             font=\scriptsize,
         },
         tick label style={font=\footnotesize},
@@ -186,8 +183,6 @@
     commentstyle=\itshape\color{black!50},
     frame=none,
     keywordstyle=\bfseries\color{Maroon},
-    % numbers=left,
-    % numberstyle=\scriptsize\bfseries,
     postbreak=\space,
     showstringspaces=false,
     stepnumber=1,
@@ -223,13 +218,11 @@
     sortcites=false,
     maxcitenames=2,
 ]{biblatex}
-\setbeamertemplate{bibliography item}[default]
+\setbeamertemplate{bibliography item}[triangle]
 \defbibenvironment{bibliography}{
 	\list{}{
         \settowidth\labelwidth{\usebeamertemplate{bibliography item}}
         \setlength\leftmargin{\labelwidth}
-        % \setlength\itemindent{-\leftmargin}
-        % \addtolength\leftmargin{\leftmargin}
         \setlength\labelsep{\biblabelsep}
         \addtolength\leftmargin{\labelsep}
         \setlength\bibitemsep{\itemsep}
