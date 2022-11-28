@@ -25,7 +25,7 @@
     \let\selectsolver\pgfmathresult\relax
     \getxmaxcsv{x\selectprofile_\selectsolver}
     \begin{axis}[%
-        width=205pt,%
+        width=185pt,%
         xmin=0,%
         xmax=0.55*\selectxmaxcsv,%
         ymin=0,%
@@ -38,6 +38,7 @@
         xlabel={\selectxlabel},%
         ylabel={\selectylabel},%
         xticklabel style={/pgf/number format/1000 sep={}},%
+        /pgfplots/max space between ticks=30,%
     ]
         \pgfmathparse{dim{\selectsolvers}-1}
         \let\selectlastindex\pgfmathresult\relax

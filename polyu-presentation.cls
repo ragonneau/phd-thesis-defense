@@ -72,7 +72,7 @@
 ]
 
 % Spacing between lines
-\usepackage[nodisplayskipstretch]{setspace}
+\RequirePackage[nodisplayskipstretch]{setspace}
 \setstretch{1.25}
 
 % Mathematics
@@ -163,7 +163,7 @@
 \setbeamerfont{alerted text}{series=\bfseries\boldmath}
 
 % Pseudocode
-\usepackage[ruled,algosection,vlined]{algorithm2e}
+\RequirePackage[ruled,algosection,vlined]{algorithm2e}
 \renewenvironment{algomathdisplay}{\begin{equation*}}{\@endalgocfline\end{equation*}\vspace{-\baselineskip}\;}
 \newenvironment{algoempheq}[2][]{\empheq[#1]{#2}}{\@endalgocfline\endempheq\vspace{-\baselineskip}\;}
 \renewcommand{\thealgocf}{}
@@ -171,8 +171,8 @@
 \SetCommentSty{commfont}
 
 % Listings environments
-\usepackage[final]{listings}
-\usepackage{lstautogobble}
+\RequirePackage[final]{listings}
+\RequirePackage{lstautogobble}
 \lstset{
     autogobble=true,
     basicstyle=\normalsize\ttfamily,
@@ -211,7 +211,7 @@
 }
 
 % Bibliography information processing
-\usepackage[
+\RequirePackage[
     style=ext-authoryear-comp,
     articlein=false,
     sorting=nyt,
