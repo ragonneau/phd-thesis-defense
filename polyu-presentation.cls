@@ -13,7 +13,7 @@
 %
 % The Current Maintainer of this work is Tom M. Ragonneau.
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{polyu-presentation}[2022/10/12 PolyU presentation document class]
+\ProvidesClass{polyu-presentation}[2022/11/29 PolyU presentation document class]
 
 % Load beamer class as basis
 \PassOptionsToPackage{usenames,dvipsnames}{xcolor}
@@ -160,7 +160,7 @@
 
 % Alert text
 \setbeamercolor{alerted text}{fg=RedViolet}
-\setbeamerfont{alerted text}{series=\bfseries\boldmath}
+\setbeamerfont{alerted text}{series=\bfseries}
 
 % Pseudocode
 \RequirePackage[ruled,algosection,vlined]{algorithm2e}
@@ -216,7 +216,7 @@
     articlein=false,
     sorting=nyt,
     sortcites=false,
-    maxcitenames=2,
+    maxcitenames=3,
 ]{biblatex}
 \setbeamertemplate{bibliography item}[triangle]
 \defbibenvironment{bibliography}{
