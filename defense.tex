@@ -986,15 +986,157 @@
 \begin{frame}
     \frametitle{Comparison with existing DFO solvers}
     
-	To do.
+	\begin{enumerate}
+        \item All the experiments are based on
+        \begin{empheq}[left={\merit(\iter) = \empheqlbrace}]{alignat*=2}
+            & \obj(\iter)                           && \quad \text{if~$v_{\infty}(x) \le 10^{-10}$,}\\
+            & \infty                                && \quad \text{if~$v_{\infty}(x) \ge 10^{-5}$,}\\
+            & \obj(\iter) + 10^5 v_{\infty}(\iter)  && \quad \text{otherwise,}
+        \end{empheq}
+        where~$v_{\infty}$ denotes the~$\ell_{\infty}$-constraint violation.
+        \item The problems are from the \alert{CUTEst} set.
+        \item The problems are of \alert{dimension} at most~$50$ (this is \alert{not} small).
+        \item We show the performance profiles for the tolerance~$\tau = 10^{-4}$.
+        \item For problems with \alert{inviolable} bounds, we set
+        \begin{equation*}
+            \obj(\iter) = \infty \quad \text{if~$\xl \nleq \iter$ or~$\iter \nleq \xu$.}
+        \end{equation*}
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Performance on unconstrained problems}
+
+	We make the following comparison on \alert{unconstrained} problems.
+
+    \medskip
+
+    \begin{center}
+        \drawperformanceprofiles{{"COBYQA","NEWUOA","COBYLA"}}{plain-1-50-perf-cobyla-cobyqa-newuoa-u.csv}{4}
+    \end{center}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Performance on unconstrained problems}
+
+	We make the following comparison on \alert{unconstrained} problems.
+
+    \medskip
+
+    \begin{center}
+        \drawperformanceprofiles{{"COBYQA","NEWUOA","COBYLA"}}{plain-1-50-perf-cobyla-cobyqa-newuoa-u.csv}{4}
+    \end{center}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Performance on bound-constrained problems}
+
+	We make the following comparison on \alert{bound-constrained} problems.
+
+    \medskip
+
+    \begin{center}
+        \drawperformanceprofiles{{"COBYQA","BOBYQA","COBYLA"}}{plain-1-50-perf-bobyqa-cobyla-cobyqa-b.csv}{4}
+    \end{center}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Performance on linearly constrained problems}
+
+	We make the following comparison on
+    \begin{enumerate}[<+->]
+        \item \alert{linearly constrained} problems,
+        \item with \alert{inviolable} bounds.
+    \end{enumerate}
+
+    \medskip
+
+    \begin{center}
+        \only<1>{\drawperformanceprofiles{{"COBYQA","LINCOA","COBYLA"}}{plain-1-50-perf-cobyla-cobyqa-lincoa-nl.csv}{4}}%
+        \only<2>{\drawperformanceprofiles{{"COBYQA","LINCOA","COBYLA"}}{plain-1-50-perf-cobyla-cobyqa-lincoa-nl-bounds.csv}{4}}
+    \end{center}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Performance on nonlinearly constrained problems}
+
+	We make the following comparison on
+    \begin{enumerate}[<+->]
+        \item \alert{nonlinearly constrained} problems,
+        \item with \alert{inviolable} bounds.
+    \end{enumerate}
+
+    \medskip
+
+    \begin{center}
+        \only<1>{\drawperformanceprofiles{{"COBYQA","COBYLA"}}{plain-1-50-perf-cobyla-cobyqa-qo.csv}{4}}%
+        \only<2>{\drawperformanceprofiles{{"COBYQA","COBYLA"}}{plain-1-50-perf-cobyla-cobyqa-qo-bounds.csv}{4}}
+    \end{center}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Comparison with COBYLA}
+
+	We make the following comparison on \alert{all} problems.
+
+    \medskip
+
+    \begin{center}
+        \drawperformanceprofiles{{"COBYQA","COBYLA"}}{plain-1-50-perf-cobyla-cobyqa-ubnlqo.csv}{4}
+    \end{center}
 \end{frame}
 
 \section{Conclusion and future research directions}
 
 \begin{frame}
-    \frametitle{Conclusion and future research directions}
+    \frametitle{Conclusion}
 
-	To do.
+	We presented the following.
+    \begin{enumerate}
+        \item \alert{PDFO}, a new interface for using Powell's DFO solvers.
+        \begin{enumerate}
+            \item It has been downloaded more than \num{40000} times.
+            \item It is included in the GEMSEO package.
+        \end{enumerate}
+        \item An investigation of the~\alert{$\Lambda$-poisedness} of a particular set.
+        \item New developments in the \alert{SQP method}.
+        \item Our new DFO method \alert{COBYQA}.
+        \begin{enumerate}
+            \item It will be included in the PDFO and GEMSEO packages.
+            \item Numerical experiments show that COBYQA is a \alert{good successor} for COBYLA.
+            \item Fran{\c{c}}ois Gallard from IRT Saint-Exup{\'{e}}ry sent us (by email)
+        \end{enumerate}
+    \end{enumerate}
+
+    \smallskip
+
+    \begin{quote}
+        \small\enquote{I have given it a try and compared with COBYLA on some problems we have (without derivatives), it is significantly faster, provides a better convergence.}
+    \end{quote}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Future research directions}
+
+	In the future, we will do the following.
+    \begin{enumerate}
+        \item Look into the \alert{implications} of our new result on the SQP subproblem.
+        \begin{enumerate}
+            \item What are the connections with \alert{manifold optimizations}?
+            \item Does it have practical implications?
+        \end{enumerate}
+        \item Study the \alert{convergence properties} of COBYQA.
+        \begin{enumerate}
+            \item Prove the global convergence of the method.
+            \item What is the local convergence rate of COBYQA?
+        \end{enumerate}
+        \item Improve further the \alert{implementation} of COBYQA.
+        \begin{enumerate}
+            \item The implementation is very complex due to the nature of DFO.
+            \item How to make as performant as LINCOA on linearly-constrained problems?
+            \item Implement it in modern Fortran (F2018 or above).
+        \end{enumerate}
+    \end{enumerate}
 \end{frame}
 
 \appendix
