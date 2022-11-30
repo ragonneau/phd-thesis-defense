@@ -113,7 +113,7 @@
 \begin{frame}
     \frametitle{What is DFO?}
     
-	Derivative-free optimization (DFO) aims at solving
+	\alert{Derivative-free optimization} (DFO) aims at solving
     \begin{equation*}
         \min_{\iter \in \fset \subseteq \R^n} \obj(x)
     \end{equation*}
@@ -260,7 +260,7 @@
     \bigskip
 
     \begin{block}{Organization of this thesis defense}
-        In what follows, we will present
+        In what follows, we present
         \begin{enumerate}
             \item the \alert{PDFO} software, interfacing existing widely used methods,
             \item an investigation of a \alert{DFO mechanism} introduced by \textcite{Powell_2006},
@@ -357,7 +357,7 @@
     \frametitle{Numerical experiments using PDFO}
     
 	\begin{columns}
-        \begin{column}{0.45\textwidth}
+        \begin{column}{0.5\textwidth}
             We compare the solvers
             \begin{enumerate}
                 \item on \alert{unconstrained} problems,
@@ -368,11 +368,11 @@
                     \begin{equation*}
                         \tilde{\obj}(\iter) = [1 + \epsilon(\iter)] \obj(\iter),
                     \end{equation*}
-                    with~$\epsilon(x) \sim N(0, \sigma^2)$,~$\sigma = 10^{-2}$.
+                    where~$\epsilon(x) \sim N(0, \sigma^2)$,~$\sigma = 10^{-2}$.
                 }
             \end{enumerate}
         \end{column}
-        \begin{column}{0.55\textwidth}
+        \begin{column}{0.5\textwidth}
             \begin{center}
                 \only<1>{\drawperformanceprofiles{{"NEWUOA","BOBYQA","LINCOA","COBYLA"}}{plain-1-50-perf-newuoa-bobyqa-lincoa-cobyla-u.csv}{4}}%
                 \only<2>{\drawperformanceprofiles{{"NEWUOA","BOBYQA","LINCOA","COBYLA"}}{noisy-1-50-2-perf-newuoa-bobyqa-lincoa-cobyla-u.csv}{1}}
@@ -389,9 +389,9 @@
     \begin{block}{}
         Many model-based DFO methods \alert{approximate}~$\obj$ by some quadratic~$\objm[k]$ with
         \begin{equation*}
-            \objm[k](y) = \obj(y), ~ y \in \xpt[k],
+            \objm[k](y) = \obj(y), ~ y \in \xpt[k]
         \end{equation*}
-        for some~$\xpt[k] \subseteq \R^n$, \alert{updated} iteratively.
+        for some~$\xpt[k] \subseteq \R^n$, updated iteratively.
         How to \alert{choose}~$\xpt[0]$?
     \end{block}
 
@@ -403,11 +403,11 @@
             \begin{empheq}[left={z^j = \empheqlbrace}]{alignat*=2}
                 & \textcolor{OliveGreen}{0}                 && \quad \text{if~$j = 1$,}\\
                 & \textcolor{BurntOrange}{\delta e_{j - 1}} && \quad \text{if~$2 \le j \le n + 1$,}\\
-                & \textcolor{Maroon}{-\delta e_{j - n - 1}} && \quad \text{if~$n + 2 \le j \le 2n + 1$,}
+                & \textcolor{Maroon}{-\delta e_{j - n - 1}} && \quad \text{if~$n + 2 \le j \le 2n + 1$}
             \end{empheq}
-            for some~$\delta > 0$, and \alert{define}~$\xpt[0]$ to be
+            for some~$\delta > 0$, and define~$\xpt[0]$ to be
             \begin{equation*}
-                \mathcal{Z}_m = \set{z^1, z^2, \dots, z^m},
+                \mathcal{Z}_m = \set{z^1, z^2, \dots, z^m}
             \end{equation*}
             for some~$m \le 2n + 1$.
         \end{column}
@@ -446,7 +446,7 @@
     We assume that~$\objm[k]$ solves
     \begin{align*}
         \min_{Q}    & \quad \norm{H_{\text{old}} - \nabla^2 Q}_{\mathsf{F}}\\
-        \text{s.t.} & \quad Q(y) = \obj(y), ~ y \in \xpt[k],
+        \text{s.t.} & \quad Q(y) = \obj(y), ~ y \in \xpt[k]
     \end{align*}
     for some~$H_{\text{old}} \in \R^{n \times n}$ (e.g.,~$0$ or~$\nabla^2 \objm[k - 1]$).
     
@@ -471,9 +471,9 @@
 
     \textcite{Ciarlet_Raviart_1972} and \textcite{Powell_2001} show that
     \begin{equation*}
-        \max_{\iter \in \mathcal{C}} @@ \abs{\obj(\iter) - \objm[k](\iter)} \le \frac{m \theta_{\mathcal{C}} \Lambda_{\mathcal{C}}}{6} \max_{1 \le i \le m} \max_{\iter \in \mathcal{C}} @@ \norm{\iter - y^i}^3,
+        \max_{\iter \in \mathcal{C}} @@ \abs[\big]{\obj(\iter) - \objm[k](\iter)} \le \frac{m \theta_{\mathcal{C}} \Lambda_{\mathcal{C}}}{6} \max_{1 \le i \le m} \max_{\iter \in \mathcal{C}} @@ \norm{\iter - y^i}^3,
     \end{equation*}
-    where
+    when~$m = (n + 1)(n + 2) / 2$, where
     \begin{equation*}
         \theta_{\mathcal{C}} = \max_{\iter \in \mathcal{C}} @@ \norm{\nabla^3 \obj(\iter)} \quad \text{and} \quad \Lambda_{\mathcal{C}} = \max_{1 \le i \le m} \max_{\iter \in \mathcal{C}} @@ \abs{\lagp[i](\iter)}.
     \end{equation*}
@@ -487,7 +487,7 @@
     \begin{block}{}
         \begin{enumerate}
             \item If~$\xpt[k] \subseteq \mathcal{C}$, then~$\Lambda_{\mathcal{C}} \ge 1$.
-            \item The lower~$\Lambda_{\mathcal{C}}$ is, the better~$\xpt[k]$ is.
+            \item The \alert{lower}~$\Lambda_{\mathcal{C}}$ is, the \alert{better}~$\xpt[k]$ is.
         \end{enumerate}
     \end{block}
 \end{frame}
@@ -608,7 +608,7 @@
 	Given an iterate~$\iter[k] \in \R^n$, let~$\step[k]$ be an approximate solution to
     \begin{align*}
         \min_{\step \in \R^n}   & \quad \nabla \obj(\iter[k])^{\T} \step + \frac{1}{2} \step^{\T} \nabla_{x, x}^2 \lag(\iter[k], \lm[k]) \step\\
-        \text{s.t.}             & \quad \con(\iter[k]) + \nabla \con(\iter[k]) \step \le 0,
+        \text{s.t.}             & \quad \con(\iter[k]) + \nabla \con(\iter[k]) \step \le 0
     \end{align*}
     for some~$\lm[k]$ and set~$\iter[k + 1] = \iter[k] + \step[k]$.
     
@@ -617,8 +617,8 @@
     \begin{block}{}
         \begin{enumerate}
             \item It generalizes the \alert{Sequential Linear Programming} (SLP) method.
-            \item It is close to a \alert{Newton-Raphson} step for the KKT system.
-            \item It does not work if~$\nabla_{x, x}^2 \lag(\iter[k], \lm[k])$ is replaced with~$\nabla^2 \obj(\iter[k])$.
+            \item $\step[k]$ is close to be a \alert{Newton-Raphson} step for the KKT system.
+            \item It does \alert{not} work if~$\nabla_{x, x}^2 \lag(\iter[k], \lm[k])$ is replaced with~$\nabla^2 \obj(\iter[k])$.
         \end{enumerate}
     \end{block}
 \end{frame}
@@ -635,7 +635,7 @@
     \end{enumerate}
 
     \begin{block}{}
-        Consider a curve parametrized by~$\iter : \R \to \R^n$ satisfying
+        Consider a \alert{curve} parametrized by~$\iter : \R \to \R^n$ satisfying
         \begin{equation*}
             c\big(\iter(t)\big) = c(\bar{\iter}) \quad \text{for all~$t \in \R$}, \quad \text{and} \quad \iter(0) = \bar{\iter}.
         \end{equation*}
@@ -653,7 +653,7 @@
 	\begin{block}{}
         \begin{enumerate}
             \item The convergence properties of the SQP method are \alert{local}.
-            \item We employ the trust-region framework as a globalization strategy.
+            \item We employ the \alert{trust-region} framework as a globalization strategy.
         \end{enumerate}
     \end{block}
 
@@ -661,10 +661,10 @@
     \begin{align*}
         \min_{\step \in \R^n}   & \quad \nabla \obj(\iter[k])^{\T} \step + \frac{1}{2} \step^{\T} \nabla_{x, x}^2 \lag(\iter[k], \lm[k]) \step\\
         \text{s.t.}             & \quad \con(\iter[k]) + \nabla \con(\iter[k]) \step \le 0,\\
-                                & \quad \norm{\step} \le \rad[k],
+                                & \quad \norm{\step} \le \rad[k]
     \end{align*}
     for some~$\lm[k]$ and~$\rad[k] > 0$.
-    Given a merit function~$\merit$, we then set
+    Given a \alert{merit function}~$\merit$, we then set
     \begin{empheq}[left={\iter[k + 1] = \empheqlbrace}]{alignat*=2}
         & \iter[k] + \step[k]   && \quad \text{if~$\merit(\iter[k] + \step[k]) < \merit(\iter[k])$,}\\
         & \iter[k]              && \quad \text{otherwise.}
@@ -833,12 +833,12 @@
 \begin{frame}
     \frametitle{The \citeauthor{Byrd_1987}-\citeauthor{Omojokun_1989} approach (cont'd)}
 
-    The normal step~$\nstep[k]$ solves approximately
+    The \alert{normal step}~$\nstep[k]$ solves approximately
     \begin{align*}
         \min_{\step \in \R^n}   & \quad \norm[\big]{\posp{\con(\iter[k]) + \nabla \con(\iter[k]) \step}},\\
-        \text{s.t.}             & \quad \norm{\step} \le \zeta \rad[k],
+        \text{s.t.}             & \quad \norm{\step} \le \zeta \rad[k]
     \end{align*}
-    for some~$\zeta \in (0, 1)$ and the tangential step~$\tstep[k]$ solves approximately
+    for some~$\zeta \in (0, 1)$ and the \alert{tangential step}~$\tstep[k]$ solves approximately
     \begin{align*}
         \min_{\step \in \R^n}   & \quad \big[ \nabla \obj(\iter[k]) + \nabla_{x, x}^2 \lag(\iter[k], \lm[k]) \nstep[k] \big]^{\T} \step + \frac{1}{2} \step^{\T} \nabla_{x, x}^2 \lag(\iter[k], \lm[k]) \step\\
         \text{s.t.}             & \quad \nabla \con(\iter[k])^{\T} \step \le \only<1>{\textcolor{OliveGreen}{\negp{- \con(\iter[k]) - \nabla \con(\iter[k]) \nstep[k]}}}\only<2>{\textcolor{BurntOrange}{0}},\\
@@ -864,7 +864,7 @@
 \begin{frame}
     \frametitle{The problem addressed by our new DFO method}
     
-	We design a method named COBYQA to solve
+	We design a method named \alert{COBYQA} to solve
     \begin{align*}
         \min_{x \in \R^n}   & \quad \obj(x)\\
         \text{s.t.}         & \quad \con(x) \le 0,\\
@@ -941,7 +941,7 @@
     \begin{align*}
         \min_{\step \in \R^n}   & \quad \nabla \objm[k](\iter[k])^{\T} \step + \frac{1}{2} \step^{\T} \nabla_{x, x}^2 \lagm[k](\iter[k], \lm[k]) \step\\
         \text{s.t.}             & \quad \conm[k](\iter[k]) + \nabla \conm[k](\iter[k]) \step \le 0,\\
-                                & \quad \norm{\step} \le \rad[k],
+                                & \quad \norm{\step} \le \rad[k]
     \end{align*}
     for some~$\lm[k]$ and~$\rad[k] > 0$, where~$\lagm[k](\iter, \lm) = \objm[k](\iter) + \lm^{\T} \conm[k](\iter)$.
 
@@ -973,7 +973,7 @@
         \begin{quote}
             \enquote{The development of NEWUOA has taken nearly three years. The work was very frustrating [...]}
         \end{quote}
-        We felt similar exasperation when developing COBYQA.
+        We felt similar frustration when developing COBYQA.
     \end{block}
 
     It will be included in
@@ -996,7 +996,7 @@
         where~$v_{\infty}$ denotes the~$\ell_{\infty}$-constraint violation.
         \item The problems are from the \alert{CUTEst} set.
         \item The problems are of \alert{dimension} at most~$50$ (this is \alert{not} small).
-        \item We show the performance profiles for the tolerance~$\tau = 10^{-4}$.
+        % \item We show the performance profiles for the tolerance~$\tau = 10^{-4}$.
         \item For problems with \alert{inviolable} bounds, we set
         \begin{equation*}
             \obj(\iter) = \infty \quad \text{if~$\xl \nleq \iter$ or~$\iter \nleq \xu$.}
@@ -1122,7 +1122,7 @@
     \begin{enumerate}
         \item Look into the \alert{implications} of our new result on the SQP subproblem.
         \begin{enumerate}
-            \item What are the connections with \alert{manifold optimizations}?
+            \item What are the connections with \alert{manifold optimization}?
             \item Does it have practical implications?
         \end{enumerate}
         \item Study the \alert{convergence properties} of COBYQA.
@@ -1133,7 +1133,7 @@
         \item Improve further the \alert{implementation} of COBYQA.
         \begin{enumerate}
             \item The implementation is very complex due to the nature of DFO.
-            \item How to make as performant as LINCOA on linearly-constrained problems?
+            \item How to make it as performant as LINCOA on linearly-constrained problems?
             \item Implement it in modern Fortran (F2018 or above).
         \end{enumerate}
     \end{enumerate}

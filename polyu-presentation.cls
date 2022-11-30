@@ -13,7 +13,7 @@
 %
 % The Current Maintainer of this work is Tom M. Ragonneau.
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{polyu-presentation}[2022/11/29 PolyU presentation document class]
+\ProvidesClass{polyu-presentation}[2022/11/30 PolyU presentation document class]
 
 % Load beamer class as basis
 \PassOptionsToPackage{usenames,dvipsnames}{xcolor}
@@ -218,7 +218,7 @@
     sortcites=false,
     maxcitenames=3,
 ]{biblatex}
-\setbeamertemplate{bibliography item}[triangle]
+% \setbeamertemplate{bibliography item}[triangle]
 \defbibenvironment{bibliography}{
 	\list{}{
         \settowidth\labelwidth{\usebeamertemplate{bibliography item}}
