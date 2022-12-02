@@ -396,7 +396,7 @@
             \end{tabular}%
         }%
         \only<2>{%
-            \begin{tabular}{@{}cS[table-format=2]SSS@{}}
+            \begin{tabular}{@{}cS[table-format=3]SSS@{}}
                 \toprule
                 Solver  & {No.\ eval.}  & {AUC score ($10^{-1}$)}   & {Accuracy ($10^{-1}$)}    & {Exec. time (\unit{h})}\\
                 \midrule
@@ -1035,6 +1035,77 @@
     \frametitle{References}
 
 	\printbibliography
+\end{frame}
+
+\begin{frame}
+    \frametitle{Hyperparameter tuning using COBYQA}
+
+    The results on the \enquote{\alert{\only<1>{splice}\only<2>{ijcnn1}}} dataset are summarized below.
+
+    \bigskip
+
+    \begin{center}
+        \only<1>{%
+            \begin{tabular}{@{}cS[table-format=3]SSS@{}}
+                \toprule
+                Solver  & {No.\ eval.}  & {AUC score ($10^{-1}$)}   & {Accuracy ($10^{-1}$)}    & {Exec.\ time (\unit{s})}\\
+                \midrule
+                COBYQA  & 25            & 5.269                     & 5.300                     & 3.037\\
+                PDFO    & 65            & 9.568                     & 9.933                     & 3.697\\
+                RS      & 100           & 6.409                     & 5.300                     & 4.635\\
+                RS      & 300           & 7.880                     & 5.300                     & 13.763\\
+                TPE     & 100           & 5.000                     & 5.033                     & 4.889\\
+                TPE     & 300           & 7.736                     & 5.300                     & 15.726\\
+                \bottomrule
+            \end{tabular}%
+        }%
+        \only<2>{%
+            \begin{tabular}{@{}cS[table-format=3]SSS@{}}
+                \toprule
+                Solver  & {No.\ eval.}  & {AUC score ($10^{-1}$)}   & {Accuracy ($10^{-1}$)}    & {Exec. time (\unit{h})}\\
+                \midrule
+                COBYQA  & 48            & 9.896                     & 9.779                     & 0.453\\
+                PDFO    & 59            & 9.940                     & 9.819                     & 0.526\\
+                RS      & 100           & 9.886                     & 9.773                     & 1.231\\
+                RS      & 300           & 9.886                     & 9.773                     & 3.681\\
+                TPE     & 100           & 9.891                     & 9.791                     & 1.230\\
+                TPE     & 300           & 9.896                     & 9.786                     & 3.487\\
+                \bottomrule
+            \end{tabular}
+        }
+    \end{center}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Performance on bound-constrained problems}
+
+	We make the following comparison on
+    \begin{enumerate}
+        \item \alert{bound-constrained} problems,
+        \item replacing~$\obj$ with~$[1 + \epsilon(\iter)] \obj(\iter)$ where~$\epsilon(x) \sim N(0, \sigma^2)$,~$\sigma = 10^{-2}$.
+    \end{enumerate}
+
+    \medskip
+
+    \begin{center}
+        \drawperformanceprofiles{{"COBYQA","BOBYQA","COBYLA"}}{noisy-1-50-2-perf-bobyqa-cobyla-cobyqa-b.csv}{2}
+    \end{center}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Performance on nonlinearly constrained problems}
+
+	We make the following comparison on
+    \begin{enumerate}
+        \item \alert{nonlinearly constrained} problems,
+        \item replacing~$\obj$ with~$[1 + \epsilon(\iter)] \obj(\iter)$ where~$\epsilon(x) \sim N(0, \sigma^2)$,~$\sigma = 10^{-2}$.
+    \end{enumerate}
+
+    \medskip
+
+    \begin{center}
+        \drawperformanceprofiles{{"COBYQA","COBYLA"}}{noisy-1-50-2-perf-cobyla-cobyqa-qo.csv}{2}
+    \end{center}
 \end{frame}
 
 \end{document}
