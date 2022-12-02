@@ -27,7 +27,7 @@
 % Dedicated mathematical macros
 \usepackage{xargs}
 \newcommand{\auglag}{\mathcal{L}_{\mathsf{A}}}
-\newcommand{\auglagalt}{\widetilde{\mathcal{L}}_{\mathsf{A}}}
+\newcommand{\auglagalt}{\tilde{\mathcal{L}}_{\mathsf{A}}}
 \newcommand{\con}[1][]{c\ifthenelse{\equal{#1}{}}{}{_{#1}}}
 \newcommandx{\conm}[2][1={},2={}]{\hat{c}\ifthenelse{\equal{#2}{}}{}{_{#2}}\ifthenelse{\equal{#1}{}}{}{^{#1}}}
 \newcommand{\fset}{\Omega}
@@ -94,26 +94,14 @@
     The Hong Kong Polytechnic University
 }
 \date{December 6, 2022}
-\titlegraphic{\href{https://www.tomragonneau.com/}{\includegraphics[width=0.8in]{images/qr/personal.png}}}
+\titlegraphic{}
 
 \begin{document}
 
 \begin{frame}
-	\titlepage
-\end{frame}
-
-\begin{frame}
-    \frametitle{Table of contents}
-    
-	\tableofcontents[hideallsubsections]
-\end{frame}
-
-\section{Introduction to DFO}
-
-\begin{frame}
     \frametitle{What is DFO?}
     
-	\alert{Derivative-free optimization} (DFO) aims at solving
+	Derivative-free optimization (DFO) aims at solving
     \begin{equation*}
         \min_{\iter \in \fset \subseteq \R^n} \obj(x)
     \end{equation*}
@@ -139,7 +127,7 @@
         \begin{enumerate}
             \item $f$ may be smooth, but derivatives \alert{cannot} be evaluated.
             \item Each function evaluation is \alert{expensive}.
-            \item The measure of complexity is the number of \alert{function evaluations}.
+            \item The number of function evaluations measures the \alert{computational cost}.
             \item Do \alert{not} use DFO if any kind of first order information is available.
         \end{enumerate}
     \end{block}
@@ -149,15 +137,21 @@
     \frametitle{Examples of DFO problems}
 
     \begin{enumerate}
-        \item Automatic error analysis \parencite{Higham_1993,Higham_2002}
-        \item Tuning nonlinear optimization methods \parencite{Audet_Orban_2006}
-        \item \alert<2>{Hyperparameter tuning} \parencite{Ghanbari_Scheinberg_2017}
-        \item Censored regression \parencite{Chen_Etal_2018}
-        \item Aeroacoustic shape design \parencite{Marsden_2004,Marsden_Etal_2004}
-        \item Computational fluid dynamics \parencite{Duvigneau_Visonneau_2004}
-        \item \alert<2>{Aircraft engine engineering}~\parencite{Gazaix_Etal_2019}
-        \item Rapid-cycling synchrotron accelerator modeling \parencite{Eldred_Etal_2022}
-        \item \dots
+        \item Academic examples
+        \begin{enumerate}
+            \item Automatic error analysis \parencite{Higham_1993,Higham_2002}.
+            \item Tuning nonlinear optimization methods \parencite{Audet_Orban_2006}.
+            \item \dots
+        \end{enumerate}
+        \item Engineering and industrial examples
+        \begin{enumerate}
+            \item \alert<2>{Hyperparameter tuning} \parencite{Ghanbari_Scheinberg_2017}.
+            \item Aeroacoustic shape design \parencite{Marsden_2004,Marsden_Etal_2004}.
+            \item Computational fluid dynamics \parencite{Duvigneau_Visonneau_2004}.
+            \item \alert<2>{Aircraft engineering}~\parencite{Gazaix_Etal_2019}.
+            \item Computational nuclear physics \parencite{Eldred_Etal_2022}.
+            \item \dots
+        \end{enumerate}
     \end{enumerate}
 
     \medskip
@@ -209,8 +203,8 @@
     \pause
     \begin{block}{}
         \begin{enumerate}
-            \item How to \alert{maximize} the testing accuracy by tuning the \alert{hyperparameters}?
-            \item What is the \alert{gradient} of the testing accuracy?
+            \item How to \alert{maximize} the performance by tuning the \alert{hyperparameters}?
+            \item What is the \alert{gradient} of the measure of performance?
         \end{enumerate}
     \end{block}
 \end{frame}
@@ -220,7 +214,7 @@
 
     Where to position the engines to maximize the performance of an aircraft?
 
-    \medskip
+    \smallskip
     
     \begin{center}
         \begin{tikzpicture}
@@ -232,48 +226,60 @@
 			\draw[thick,stealth-stealth] (1.5,0) -- (1.5,-1);
 			\draw[thick,stealth-stealth] (-2.5,-1) -- (-2.5,-0.5) -- (1,-0.5) -- (1,0);
 			\draw[thick,stealth-stealth] (5.5,-1) -- (5.5,-0.5) -- (2,-0.5) -- (2,0);
-            \node at (1.5,0.75) {\makecell{Multi-disciplinary\\ optimization}};
+            \node at (1.5,0.75) {MDO};
             \node at (-2.5,-1.75) {\makecell{Aerodynamic\\ optimization}};
             \node at (1.5,-1.75) {\makecell{OAD\\ optimization}};  % Overall Aircraft Design
             \node at (5.5,-1.75) {\makecell{Structure\\ optimization}};
             \node[below right,text=DarkOrchid] at (-4.25,-2.75) {\small\emph{Different independent disciplines/departments}};
         \end{tikzpicture}
     \end{center}
+
+    \vspace{-\medskipamount}
     
 	\begin{block}{}
         \begin{enumerate}
             \item Each discipline provides only a \alert{fragment} of the problem.
-            \item The derivatives of some or all components involved may be \alert{unknown}.
+            \item Each fragment of the problem involves \alert{simulations}.
+            \item The problem is designed by engineers from IRT Saint-Exup{\'{e}}ry (\alert{Airbus}).
         \end{enumerate}
     \end{block}
 \end{frame}
 
 \begin{frame}
-    \frametitle{A lack of theories and methodologies}
+    \frametitle{Focus of this thesis}
 
-    We are in lack of
-    \begin{enumerate}
-        \item easily usable DFO \alert{solvers}, and
-        \item \alert{theoretical} understanding of several DFO techniques.
-    \end{enumerate}
+    There are numerous excellent works in DFO.
 
-    \bigskip
+    \medskip
 
-    \begin{block}{Organization of this thesis defense}
-        In what follows, we present
+    \begin{block}{}
         \begin{enumerate}
-            \item the \alert{PDFO} software, interfacing existing widely used methods,
-            \item an investigation of a \alert{DFO mechanism} introduced by \textcite{Powell_2006},
-            \item new developments in the \alert{SQP method} (derivative-based), and
-            \item the \alert{COBYQA} method, a new DFO method.
+            \item \alert{Direct-search methods}: Nelder-Mead \parencite{Nelder_Mead_1965}, MADS \parencite{Audet_Dennis_2006}, BFO \parencite{Porcelli_Toint_2017,Porcelli_Toint_2022}, \dots
+            \item \alert{Model-based methods}: WEDGElin \parencite{Marazzi_Nocedal_2002}, MNH \parencite{Wild_2008}, DFO-LS \parencite{Cartis_Etal_2019,Hough_Roberts_2022}, \emph{Powell's DFO methods}, \dots
         \end{enumerate}
     \end{block}
+
+    \medskip
+
+    However, there are still many challenges, e.g.,
+    \begin{enumerate}
+        \item having \alert{theoretical} understanding of several DFO techniques,
+        \item finding new DFO \alert{methodologies},
+        \item designing new DFO \alert{algorithms}, and
+        \item producing \alert{software packages} (necessary to make an impact, but hard).
+    \end{enumerate}
 \end{frame}
+
+\begin{framenopagination}
+    \frametitle{Table of contents}
+    
+	\tableofcontents[hideallsubsections]
+\end{framenopagination}
 
 \section{Solving DFO problems using PDFO}
 
 \begin{frame}
-    \frametitle{Existing methods for DFO}
+    \frametitle{Powell's DFO solvers}
 
     We want to solve
     \begin{equation*}
@@ -282,30 +288,6 @@
     where derivatives of~$\obj$ (and possibly the constraint functions) are \alert{unknown}.
 
     \bigskip
-
-    \begin{block}{}
-        \begin{enumerate}
-            \item \alert{Direct-search methods}: Nelder-Mead \parencite{Nelder_Mead_1965}, GPS \parencite{Booker_Etal_1999}, MADS \parencite{Audet_Dennis_2006}, \dots
-            \item \alert{Model-based methods}: Wedge \parencite{Marazzi_Nocedal_2002}, GALAHAD \parencite{Gould_Orban_Toint_2003}, MNH \parencite{Wild_2008}, \textcite{Fasano_Morales_Nocedal_2009}, \textcite{Conejo_Karas_Pedroso_2015}, \textcite{Audet_Digabel_Peyrega_2016}, \textcite{Jarre_Lieder_2017}, \emph{Powell's methods}, \dots
-            % UOBYQA \parencite{Powell_2002}, NEWUOA \parencite{Powell_2006}, BOBYQA \parencite{Powell_2009}, LINCOA \parencite{Powell_2015}, COBYLA \parencite{Powell_1994}, \dots
-        \end{enumerate}
-    \end{block}
-    
-	% \begin{enumerate}
-    %     \item \textcite{Jarre_Lieder_2017}.
-    %     \item \textcite{Santo_Denysiuk_Fernandes_2014}.
-    %     \item \textcite{Audet_Digabel_Peyrega_2016}.
-    %     \item \textcite{Conejo_Karas_Pedroso_2015}.
-    %     \item \textcite{Gould_Orban_Toint_2003}.
-    % \end{enumerate}
-\end{frame}
-
-\begin{frame}
-    \frametitle{A focus on Powell's DFO solvers}
-    
-	Powell's designed five DFO solvers.
-
-    \medskip
 
     \begin{center}
         \begin{tabular}{lll}
@@ -320,8 +302,22 @@
             \bottomrule
         \end{tabular}
     \end{center}
+\end{frame}
 
-    \medskip
+\begin{frame}
+    \frametitle{Powell's DFO solvers (cont'd)}
+
+    They are \alert{not} unknown solvers.
+    For example, COBYLA
+    \begin{enumerate}
+        \item is cited more than \alert{\num{1250} times},
+        \item underlies \texttt{scipy.optimize.minimize} in Python,
+        \item is used by IRT Saint-Exup{\'{e}}ry (\alert{Airbus}) to solve MDO problems,
+        \item is a reference to assess the performance of new DFO solvers,
+        \item \dots
+    \end{enumerate}
+
+    \bigskip
 
     \begin{block}{An obstacle to using Powell’s DFO solvers}
         Powell implemented them in \alert{Fortran 77}\dots
@@ -341,7 +337,7 @@
         \item The \alert{MATLAB} signature is consistent with \texttt{fmincon}.
         \item The \alert{Python} signature is consistent with \texttt{scipy.optimize.minimize}.
         \item PDFO is \alert{open-source} and distributed under the LGPLv3+ license.
-        \item This is \alert{not} a reimplementation of Powell's solvers.
+        \item The package has been downloaded more than \alert{\num{40000} times}.
     \end{enumerate}
 
     \medskip
@@ -355,53 +351,109 @@
 
 \begin{frame}
     \frametitle{Numerical experiments using PDFO}
-    
-	\begin{columns}
-        \begin{column}{0.5\textwidth}
-            We compare the solvers
-            \begin{enumerate}
-                \item on \alert{unconstrained} problems,
-                \item from the \alert{CUTEst} set,
-                \item of dimension \alert{at most 50}\only<1>{.}\only<2>{,}
-                \uncover<2>{
-                    \item replacing~$\obj$ with
-                    \begin{equation*}
-                        \tilde{\obj}(\iter) = [1 + \epsilon(\iter)] \obj(\iter),
-                    \end{equation*}
-                    where~$\epsilon(x) \sim N(0, \sigma^2)$,~$\sigma = 10^{-2}$.
-                }
-            \end{enumerate}
-        \end{column}
-        \begin{column}{0.5\textwidth}
-            \begin{center}
-                \only<1>{\drawperformanceprofiles{{"NEWUOA","BOBYQA","LINCOA","COBYLA"}}{plain-1-50-perf-newuoa-bobyqa-lincoa-cobyla-u.csv}{4}}%
-                \only<2>{\drawperformanceprofiles{{"NEWUOA","BOBYQA","LINCOA","COBYLA"}}{noisy-1-50-2-perf-newuoa-bobyqa-lincoa-cobyla-u.csv}{1}}
-            \end{center}
-        \end{column}
-    \end{columns}
+
+    We consider the \alert{hyperparameter tuning} of an SVM.
+    \begin{enumerate}
+        \item It has two hyperparameters.
+        \item We maximize the \num{5}-fold cross-validation \alert{AUC score}.
+        \item We compare PDFO with two methods (RS and TPE).
+        \item We run the experiment on two different datasets.
+    \end{enumerate}
+
+    \medskip
+
+    \begin{center}
+        \begin{tabular}{@{}cS[table-format=2]S[table-format=5]@{}}
+            \toprule
+            LIBSVM Dataset  & {Dimension}   & {Dataset size}\\
+            \midrule
+            splice          & 60            & 1000\\
+            ijcnn1          & 22            & 49990\\
+            \bottomrule
+        \end{tabular}
+    \end{center}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Numerical experiments using PDFO (cont'd)}
+
+    The results on the \enquote{\alert{\only<1>{splice}\only<2>{ijcnn1}}} dataset are summarized below.
+
+    \bigskip
+
+    \begin{center}
+        \only<1>{%
+            \begin{tabular}{@{}cS[table-format=3]SSS@{}}
+                \toprule
+                Solver  & {No.\ eval.}  & {AUC score ($10^{-1}$)}   & {Accuracy ($10^{-1}$)}    & {Exec.\ time (\unit{s})}\\
+                \midrule
+                PDFO    & 65            & 9.568                     & 9.933                     & 3.697\\
+                RS      & 100           & 6.409                     & 5.300                     & 4.635\\
+                RS      & 300           & 7.880                     & 5.300                     & 13.763\\
+                TPE     & 100           & 5.000                     & 5.033                     & 4.889\\
+                TPE     & 300           & 7.736                     & 5.300                     & 15.726\\
+                \bottomrule
+            \end{tabular}%
+        }%
+        \only<2>{%
+            \begin{tabular}{@{}cS[table-format=2]SSS@{}}
+                \toprule
+                Solver  & {No.\ eval.}  & {AUC score ($10^{-1}$)}   & {Accuracy ($10^{-1}$)}    & {Exec. time (\unit{h})}\\
+                \midrule
+                PDFO    & 59            & 9.940                     & 9.819                     & 0.526\\
+                RS      & 100           & 9.886                     & 9.773                     & 1.231\\
+                RS      & 300           & 9.886                     & 9.773                     & 3.681\\
+                TPE     & 100           & 9.891                     & 9.791                     & 1.230\\
+                TPE     & 300           & 9.896                     & 9.786                     & 3.487\\
+                \bottomrule
+            \end{tabular}
+        }
+    \end{center}
 \end{frame}
 
 \section{Understanding a DFO mechanism}
 
 \begin{frame}
-    \frametitle{A model-based DFO mechanism}
+    \frametitle{$\Lambda$-poisedness of interpolation sets}
     
     \begin{block}{}
         Many model-based DFO methods \alert{approximate}~$\obj$ by some quadratic~$\objm[k]$ with
         \begin{equation*}
             \objm[k](y) = \obj(y), ~ y \in \xpt[k]
         \end{equation*}
-        for some~$\xpt[k] \subseteq \R^n$, updated iteratively.
-        How to \alert{choose}~$\xpt[0]$?
+        for some~$\xpt[k] = \set{y^1, y^2, \dots, y^m} \subseteq \R^n$, updated iteratively.
     \end{block}
 
+    An important properties of~$\xpt[k]$ in a compact set~$\mathcal{C} \subseteq \R^n$ is given by
+    \begin{equation*}
+        \Lambda_{\mathcal{C}} = \max_{1 \le i \le m} \max_{\iter \in \mathcal{C}} @@ \abs{\lagp[i](\iter)},
+    \end{equation*}
+    where~$\lagp[i]$ is the least Frobenius norm \alert{Lagrange polynomial} associated with~$y^i$.
+
     \smallskip
+
+    \begin{block}{$\Lambda$-poisedness \parencite{Conn_Scheinberg_Vicente_2009b}}
+        The set~$\xpt[k]$ is said \alert{$\Lambda$-poised} in~$\mathcal{C} \subseteq \R^n$ if~$\Lambda \ge \Lambda_{\mathcal{C}}$.
+    \end{block}
+
+    The \alert{lower}~$\Lambda_{\mathcal{C}}$ is, the \alert{better}~$\xpt[k]$ is.
+\end{frame}
+
+\begin{frame}
+    \frametitle{A model-based DFO mechanism}
+    
+    \begin{block}{}
+        $\xpt[k + 1]$ is usually updated from~$\xpt[k]$.
+        However, how to \alert{choose}~$\xpt[0]$?
+    \end{block}
+
+    \bigskip
 
     \begin{columns}
         \begin{column}{0.6\textwidth}
             As \textcite{Powell_2006}, assuming that~$\iter[0] = 0$, let
             \begin{empheq}[left={z^j = \empheqlbrace}]{alignat*=2}
-                & \textcolor{OliveGreen}{0}                 && \quad \text{if~$j = 1$,}\\
+                & \textcolor{MidnightBlue}{0}                 && \quad \text{if~$j = 1$,}\\
                 & \textcolor{BurntOrange}{\delta e_{j - 1}} && \quad \text{if~$2 \le j \le n + 1$,}\\
                 & \textcolor{Maroon}{-\delta e_{j - n - 1}} && \quad \text{if~$n + 2 \le j \le 2n + 1$}
             \end{empheq}
@@ -424,11 +476,11 @@
                         ylabel={$x_2$},
                         width=\columnwidth,
                     ]
-                        \addplot[only marks,mark options={fill=OliveGreen}] coordinates {(0, 0)} node[above right,text=OliveGreen] {$z^0$};
-                        \addplot[only marks,mark options={fill=BurntOrange}] coordinates {(1, 0)} node[above,text=BurntOrange] {$z^1$};
-                        \addplot[only marks,mark options={fill=BurntOrange}] coordinates {(0, 1)} node[right,text=BurntOrange] {$z^2$};
-                        \addplot[only marks,mark options={fill=Maroon}] coordinates {(-1, 0)} node[above,text=Maroon] {$z^3$};
-                        \addplot[only marks,mark options={fill=Maroon}] coordinates {(0, -1)} node[right,text=Maroon] {$z^4$};
+                        \addplot[only marks,mark options={fill=MidnightBlue}] coordinates {(0, 0)} node[above right,text=MidnightBlue] {$z^1$};
+                        \addplot[only marks,mark options={fill=BurntOrange}] coordinates {(1, 0)} node[above,text=BurntOrange] {$z^2$};
+                        \addplot[only marks,mark options={fill=BurntOrange}] coordinates {(0, 1)} node[right,text=BurntOrange] {$z^3$};
+                        \addplot[only marks,mark options={fill=Maroon}] coordinates {(-1, 0)} node[above,text=Maroon] {$z^4$};
+                        \addplot[only marks,mark options={fill=Maroon}] coordinates {(0, -1)} node[right,text=Maroon] {$z^5$};
                         \addplot[no marks] coordinates{(0, 0) (1, 0)};
                         \addplot[no marks] coordinates{(0, 0) (0, 1)};
                         \addplot[no marks] coordinates{(0, 0) (-1, 0)};
@@ -441,58 +493,6 @@
 \end{frame}
 
 \begin{frame}
-    \frametitle{$\Lambda$-poisedness of interpolation set}
-
-    We assume that~$\objm[k]$ solves
-    \begin{align*}
-        \min_{Q}    & \quad \norm{H_{\text{old}} - \nabla^2 Q}_{\mathsf{F}}\\
-        \text{s.t.} & \quad Q(y) = \obj(y), ~ y \in \xpt[k]
-    \end{align*}
-    for some~$H_{\text{old}} \in \R^{n \times n}$ (e.g.,~$0$ or~$\nabla^2 \objm[k - 1]$).
-    
-    \medskip
-
-    \begin{block}{}
-        We denote
-        \begin{enumerate}
-            \item $\xpt[k] = \set{y^1, y^2, \dots, y^m}$,
-            \item $\mathcal{C} \subseteq \R^n$ any compact set, and
-            \item $\lagp[i]$ the (quadratic) \alert{Lagrange polynomial} associated with~$y^i$, solving
-            \begin{align*}
-                \min_{Q}    & \quad \norm{\nabla^2 Q}_{\mathsf{F}}\\
-                \text{s.t.} & \quad Q(y^j) = \delta_{i, j}, ~ j \in \set{1, 2, \dots, m}.
-            \end{align*}
-        \end{enumerate}
-    \end{block}
-\end{frame}
-
-\begin{frame}
-    \frametitle{$\Lambda$-poisedness of interpolation set (cont'd)}
-
-    \textcite{Ciarlet_Raviart_1972} and \textcite{Powell_2001} show that
-    \begin{equation*}
-        \max_{\iter \in \mathcal{C}} @@ \abs[\big]{\obj(\iter) - \objm[k](\iter)} \le \frac{m \theta_{\mathcal{C}} \Lambda_{\mathcal{C}}}{6} \max_{1 \le i \le m} \max_{\iter \in \mathcal{C}} @@ \norm{\iter - y^i}^3,
-    \end{equation*}
-    when~$m = (n + 1)(n + 2) / 2$, where
-    \begin{equation*}
-        \theta_{\mathcal{C}} = \max_{\iter \in \mathcal{C}} @@ \norm{\nabla^3 \obj(\iter)} \quad \text{and} \quad \Lambda_{\mathcal{C}} = \max_{1 \le i \le m} \max_{\iter \in \mathcal{C}} @@ \abs{\lagp[i](\iter)}.
-    \end{equation*}
-
-    \begin{block}{$\Lambda$-poisedness \parencite{Conn_Scheinberg_Vicente_2009b}}
-        The set~$\xpt[k]$ is \alert{$\Lambda$-poised} in~$\mathcal{C} \subseteq \R^n$ if~$\lambda \ge \Lambda_{\mathcal{C}}$.
-    \end{block}
-    
-    \medskip
-
-    \begin{block}{}
-        \begin{enumerate}
-            \item If~$\xpt[k] \subseteq \mathcal{C}$, then~$\Lambda_{\mathcal{C}} \ge 1$.
-            \item The \alert{lower}~$\Lambda_{\mathcal{C}}$ is, the \alert{better}~$\xpt[k]$ is.
-        \end{enumerate}
-    \end{block}
-\end{frame}
-
-\begin{frame}
     \frametitle{Bounds for the~$\Lambda$-poisedness of~$\mathcal{Z}_m$}
 
     \begin{block}{}
@@ -500,125 +500,88 @@
         \begin{equation*}
             \Lambda_p \in \big[ 1 + (2n + 1 - m)^{\frac{p - 1}{p}},  n \big],
         \end{equation*}
-        where~$0^0 = 0$.
-        Moreover, the lower bound is \alert{reached} if~$p \in \set{1, 2}$.
+        where we define~$0^0 = 0$.
+        Moreover, the lower bound is \alert{attained} if~$p \in \set{1, 2}$.
     \end{block}
 
-    \only<1>{
-        \bigskip
+    \bigskip
 
-        \begin{center}
-            \begin{tikzpicture}
-                \begin{axis}[
-                    xtick={22,41},
-                    xticklabels={$n + 2$,$2n + 1$},
-                    ytick={1,3,5,7,9},
-                    xlabel={$m$ (with~$n = 20$)},
-                    ylabel={Lower bound},
-                    width=0.9\textwidth,
-                    height=0.55\textheight,
-                    samples at={22,...,41},
-                ]
-                    \addplot{ifthenelsefpu((x==41), 1, 2)};
-                    \addplot{1+(41-x)^(1/2)};
-                    \addplot{1+(41-x)^(2/3)};
-                    \addplot{1+(41-x)^(3/4)};
-                    \addlegendentry{$p = 1$}
-                    \addlegendentry{$p = 2$}
-                    \addlegendentry{$p = 3$}
-                    \addlegendentry{$p = 4$}
-                \end{axis}  
-            \end{tikzpicture}
-        \end{center}
-    }
-    \only<2>{
-        \emph{Proof of concept}.
-        \begin{enumerate}
-            \item Construct explicit formulae for~$\set{\lagp[i]}_{1 \le i \le m}$.
-            \item Show that~$\mathcal{Z}_m$ is~$\Lambda_p$-poised in~$\mathcal{B}_p(\delta)$ with
-            \begin{equation*}
-                \Lambda_p = \max_{\iter \in \mathcal{B}_p(\delta)} \abs{\lagp[1](\iter)}.
-            \end{equation*}
-            \item The lower bound is obtained by evaluating~$\abs{\lagp[1](\iter)}$ at a particular~$\iter$.
-            \item The upper bound follows~$\mathcal{B}_p(\delta) \subseteq \mathcal{B}_{\infty}(\delta)$ so that~$\Lambda_p \le \Lambda_{\infty}$ with
-            \setlength{\belowdisplayskip}{0pt}
-            \begin{equation*}
-                \Lambda_{\infty} = \max \set{2n + 2 - m, n - 1}.
-            \end{equation*}
-        \end{enumerate}
-    }
+    \begin{center}
+        \begin{tikzpicture}
+            \begin{axis}[
+                xtick={22,41},
+                xticklabels={$n + 2$,$2n + 1$},
+                ytick={1,3,5,7,9},
+                xlabel={$m$ (with~$n = 20$)},
+                ylabel={Lower bound},
+                width=0.9\textwidth,
+                height=0.55\textheight,
+                samples at={22,...,41},
+            ]
+                \addplot{ifthenelsefpu((x==41), 1, 2)};
+                \addplot{1+(41-x)^(1/2)};
+                \addplot{1+(41-x)^(2/3)};
+                \addplot{1+(41-x)^(3/4)};
+                \addlegendentry{$p = 1$}
+                \addlegendentry{$p = 2$}
+                \addlegendentry{$p = 3$}
+                \addlegendentry{$p = 4$}
+            \end{axis}  
+        \end{tikzpicture}
+    \end{center}
 \end{frame}
 
 \begin{frame}
-    \frametitle{A special case and its significance}
+    \frametitle{Bounds for the~$\Lambda$-poisedness of~$\mathcal{Z}_m$ (cont'd)}
 
-    \begin{block}{}
-        For any~$p \in [1, \infty)$, then~$\mathcal{Z}_{2n + 1}$ is~$\Lambda_p$-poised in~$\mathcal{B}_p(\delta)$ with
+    \emph{Sketch of the proof}.
+    \begin{enumerate}
+        \item Construct explicit formulae for~$\set{\lagp[i]}_{1 \le i \le m}$.
+        \item Show that~$\mathcal{Z}_m$ is~$\Lambda_p$-poised in~$\mathcal{B}_p(\delta)$ with
         \begin{equation*}
-            \Lambda_p = \max \set[\big]{1, n^{\frac{p - 2}{2}} - 1}.
+            \Lambda_p = \max_{\iter \in \mathcal{B}_p(\delta)} \abs{\lagp[1](\iter)}.
         \end{equation*}
-    \end{block}
-
-    \medskip
-
-    We then remark the following
-    \begin{enumerate}
-        \item For~$p \in [1, 2]$, we have~$\Lambda_p = 1$.
-        \item Since~$\mathcal{Z}_m \subseteq \mathcal{B}_p(\delta)$,~$\mathcal{Z}_m$ is \alert{at best}~$1$-poised in~$\mathcal{B}_p(\delta)$.
+        \item The lower bound is obtained by evaluating~$\abs{\lagp[1](\iter)}$ at a particular~$\iter$.
+        \item The upper bound follows~$\mathcal{B}_p(\delta) \subseteq \mathcal{B}_{\infty}(\delta)$ so that~$\Lambda_p \le \Lambda_{\infty}$ with
+        \begin{equation*}
+            \Lambda_{\infty} = \max \set{2n + 2 - m, n - 1} \le n.
+        \end{equation*}
     \end{enumerate}
-    
-    \medskip
+
+    \smallskip
+
+    In particular, we can show that for~$p \in [1, 2]$, we have~$\Lambda_p = 1$.
 
     \begin{block}{}
-        Therefore,~$m = 2n + 1$ is \alert{optimal} for~$\mathcal{Z}_m$ when~$p \in [1, 2]$.
-    \end{block}
-
-    \medskip
-
-    \begin{enumerate}
-        \item We \alert{conjecture} that this is true for all~$p \in [1, \infty)$.
-        \item It provides a theoretical \alert{understanding} of Powell's default value.
-    \end{enumerate}
-\end{frame}
-
-\section{New developments in the SQP method}
-
-\begin{frame}
-    \frametitle{The problem}
-
-	We consider in what follows
-    \begin{align*}
-        \min_{\iter \in \R^n}   & \quad \obj(\iter)\\
-        \text{s.t.}             & \quad \con(\iter) \le 0,
-    \end{align*}
-    where derivatives of~$\obj$ and~$\con$ are \alert{known}.
-    Recall that its \alert{Lagrangian} is
-    \begin{equation*}
-        \lag(\iter, \lm) = \obj(\iter) + \lm^{\T} \con(\iter).
-    \end{equation*}
-
-    \begin{block}{The purpose of the SQP method}
-        How to \alert{practically} and \alert{efficiently} (Q-quadratically) solve this problem?
+        Because~$\mathcal{Z}_m \subseteq \mathcal{B}_p(\delta)$,~$m = 2n + 1$ is \alert{optimal} for~$\mathcal{Z}_m$ when~$p \in [1, 2]$.
     \end{block}
 \end{frame}
+
+\section{New perspectives and developments on the SQP method}
 
 \begin{frame}
     \frametitle{The Sequential Quadratic Programming (SQP) method}
-    
-	Given an iterate~$\iter[k] \in \R^n$, let~$\step[k]$ be an approximate solution to
+
+    We consider the \alert{derivative-based}     optimization problem
+    \begin{align*}
+        \min_{\iter \in \R^n}   & \quad \obj(\iter)\\
+        \text{s.t.}             & \quad \con(\iter) \le 0.
+    \end{align*}
+	Given~$\iter[k] \in \R^n$, the SQP method lets~$\step[k]$ be an approximate solution to
     \begin{align*}
         \min_{\step \in \R^n}   & \quad \nabla \obj(\iter[k])^{\T} \step + \frac{1}{2} \step^{\T} \nabla_{x, x}^2 \lag(\iter[k], \lm[k]) \step\\
         \text{s.t.}             & \quad \con(\iter[k]) + \nabla \con(\iter[k]) \step \le 0
     \end{align*}
-    for some~$\lm[k]$ and set~$\iter[k + 1] = \iter[k] + \step[k]$.
+    for some~$\lm[k]$, where~$\lag$ denotes the \alert{Lagrangian}, and sets~$\iter[k + 1] = \iter[k] + \step[k]$.
     
     \medskip
 
     \begin{block}{}
         \begin{enumerate}
-            \item It generalizes the \alert{Sequential Linear Programming} (SLP) method.
-            \item $\step[k]$ is close to be a \alert{Newton-Raphson} step for the KKT system.
-            \item It does \alert{not} work if~$\nabla_{x, x}^2 \lag(\iter[k], \lm[k])$ is replaced with~$\nabla^2 \obj(\iter[k])$.
+            \item It is closely related a \alert{Newton} method for the KKT system.
+            \item Does it work if~$\nabla_{x, x}^2 \lag(\iter[k], \lm[k])$ is replaced with~$\nabla^2 \obj(\iter[k])$?
+            \pause
+            \alert{No}.
         \end{enumerate}
     \end{block}
 \end{frame}
@@ -630,7 +593,7 @@
         \item Assume for simplicity that the problem's constraints are~$\con(\iter) = 0$.
         \item For some~$\bar{\iter}$ and~$\bar{\lm}$, define
         \begin{equation*}
-            Q(\step) = \obj(\bar{\iter}) + \nabla \obj(\bar{\iter})^{\T} \step + \frac{1}{2} \step^{\T} \only<1>{\textcolor{OliveGreen}{\nabla_{x, x}^2 \lag(\bar{\iter}, \bar{\lm})}}\only<2>{\textcolor{BurntOrange}{\nabla^2 \obj(\bar{\iter})}} \step.
+            Q(\step) = \obj(\bar{\iter}) + \nabla \obj(\bar{\iter})^{\T} \step + \frac{1}{2} \step^{\T} \only<1>{\textcolor{MidnightBlue}{\nabla_{x, x}^2 \lag(\bar{\iter}, \bar{\lm})}}\only<2>{\textcolor{BurntOrange}{\nabla^2 \obj(\bar{\iter})}} \step.
         \end{equation*}
     \end{enumerate}
 
@@ -641,10 +604,31 @@
         \end{equation*}
         Under some regularity assumptions, there exist~$\nu \ge 0$ and~$\epsilon > 0$ such that
         \begin{equation*}
-            \abs[\big]{\obj\big(\iter(t)\big) - Q\big(\iter'(0) t\big)} \le \bigg(\nu t + \frac{1}{2} \abs[\big]{\iter''(0)^{\T} \only<1>{\textcolor{OliveGreen}{\big[\nabla \obj(\bar{\iter}) + \nabla c(\bar{\iter})^{\T} \bar{\lm} \big]}}\only<2>{\textcolor{BurntOrange}{\nabla \obj(\bar{\iter})}}} \bigg) t^2,
+            \abs[\big]{\obj\big(\iter(t)\big) - Q\big(\iter'(0) t\big)} \le \bigg(\nu t + \frac{1}{2} \abs[\big]{\iter''(0)^{\T} \only<1>{\textcolor{MidnightBlue}{\big[\nabla \obj(\bar{\iter}) + \nabla c(\bar{\iter})^{\T} \bar{\lm} \big]}}\only<2>{\textcolor{BurntOrange}{\nabla \obj(\bar{\iter})}}} \bigg) t^2,
         \end{equation*}
         for all~$t \in (-\epsilon, \epsilon)$.
     \end{block}
+\end{frame}
+
+\begin{frame}
+    \frametitle{A new interpretation of the SQP subproblem (cont'd)}
+
+    \emph{Sketch of the proof}.
+    \begin{enumerate}
+        \item With~$\phi = \obj \circ \iter$ and~$\hat{\phi}$ its second-order Maclaurin expansion, we have
+        \begin{equation*}
+            \abs[\big]{\obj \big(\iter(t) \big) - Q(\iter'(0) t)} \le \underbrace{\abs[\big]{\phi(t) - \hat{\phi}(t)}}_{\le \nu t^3} + \abs[\big]{\hat{\phi}(t) - Q(\iter'(0) t)}.
+        \end{equation*}
+        \item Show by direct calculations that
+        \begin{equation*}
+            \abs[\big]{\hat{\phi}(t) - Q(\iter'(0) t)} = \frac{t^2}{2} \abs[\bigg]{\iter''(0)^{\T} \nabla \obj(\bar{\iter}) - \sum_i \bar{\lm}_i \iter'(0) \nabla^2 \con[i](\bar{\iter}) \iter'(0)}.
+        \end{equation*}
+        \item Remark that~$\con \circ x$ is a constant, so that
+        \begin{equation*}
+            0 = \frac{\du^2}{\du t^2} \con[i] \big( \iter(t) \big) \bigg\vert_{t = 0} = \iter'(0)^{\T} \nabla^2 \con[i](\bar{\iter}) \iter'(0) + \iter''(0)^{\T} \nabla \con[i](\bar{\iter}).
+        \end{equation*}
+        \item The result is obtained by combining these three equations.
+    \end{enumerate}
 \end{frame}
 
 \begin{frame}
@@ -670,95 +654,12 @@
         & \iter[k]              && \quad \text{otherwise.}
     \end{empheq}
 
-    \pause
     How to \alert{solve} the subproblem?
     What if it is \alert{infeasible}?
 \end{frame}
 
 \begin{frame}
-    \frametitle{The \citeauthor{Vardi_1985} approach}
-
-    To define the \alert{trial step}~$\step[k]$,
-    \begin{enumerate}
-        \item we \alert{shift} the infeasible linear constraints towards~$x^k$, and
-        \item we evaluate~$\step[k]$ on the \alert{relaxed subproblem}.
-    \end{enumerate}
-    
-	\begin{columns}
-        \begin{column}{0.45\textwidth}
-            \begin{center}
-                \begin{tikzpicture}
-                    % Linear constraints
-                    \uncover<1>{\fill[color=RoyalBlue,opacity=0.4] (-4,-1) -- (-1.5,-1) -- (-0.5,4) -- (-4,4) -- cycle;}
-                    \uncover<2->{\fill[color=RoyalBlue,opacity=0.4] (-4,-1) -- (-1.175,-1) -- (-0.175,4) -- (-4,4) -- cycle;}
-                    \uncover<1>{\fill[color=RoyalBlue,opacity=0.4] (-4,1) -- (0,4) -- (-4,4) -- cycle;}
-                    \uncover<2->{\fill[color=RoyalBlue,opacity=0.4] (-4,0) -- (1,3.75) -- (1,4) -- (-4,4) -- cycle;}
-        
-                    % Trust regions
-                    \begin{scope}
-                        \clip (-4,-1) rectangle (1,4);
-                        \draw[fill=Dandelion,opacity=0.7] (0,0) circle (3);
-                    \end{scope}
-        
-                    % Feasible region for the relaxed subproblem
-                    \begin{scope}
-                        \clip (-4,0) -- (-15/34,363/136) -- (-0.175,4) -- (-4,4) -- cycle;
-                        \uncover<3->{\fill[pattern=north west lines,opacity=0.7] (0,0) circle (3);}
-                    \end{scope}
-        
-                    % Frame and annotations
-                    \uncover<4>{
-                        \draw[-stealth,thick] (0,0) -- (-0.9,2.7);
-                        \node[above right] at (-0.45,1.35) {$\step[k]$};
-                    }
-                    \draw[fill] (0,0) circle (1.4pt) node[below right] {$\iter[k]$};
-                    \draw[thick] (-4,-1) rectangle (1,4);
-                \end{tikzpicture}
-            \end{center}
-        \end{column}
-        \begin{column}{0.55\textwidth}
-            \begin{tikzpicture}
-                \draw[fill=Dandelion,opacity=0.7] (0,0) circle (.2);
-                \node[right] at (.4,0) {Trust region};
-                \fill[color=RoyalBlue,opacity=0.4] (-.2,-0.8) rectangle (.2,-0.4);
-                \node[right] at (.4,-0.6) {Linear constraints};
-                \uncover<3->{
-                    \fill[pattern=north west lines,opacity=0.7] (-.2,-1.4) rectangle (.2,-1);
-                    \node[right] at (.4,-1.2) {Feasible region for~$\step[k]$};
-                }
-            \end{tikzpicture}
-        \end{column}
-    \end{columns}
-\end{frame}
-
-\begin{frame}
-    \frametitle{The \citeauthor{Vardi_1985} approach (cont'd)}
-
-    The subproblem becomes
-    \begin{align*}
-        \min_{\step \in \R^n}   & \quad \nabla \obj(\iter[k])^{\T} \step + \frac{1}{2} \step^{\T} \nabla_{x, x}^2 \lag(\iter[k], \lm[k]) \step\\
-        \text{s.t.}             & \quad \Gamma \con(\iter[k]) + \nabla \con(\iter[k]) \step \le 0,\\
-                                & \quad \norm{\step} \le \rad[k],
-    \end{align*}
-    where~$\Gamma$ is the diagonal matrix such that
-    \begin{empheq}[left={\Gamma_{i, i} = \empheqlbrace}]{alignat*=2}
-        & \alpha    && \quad \text{if~$\con[i](\iter[k]) > 0$,}\\
-        & 1         && \quad \text{otherwise,}
-    \end{empheq}
-    with~$\alpha \in [0, 1]$ being chosen to make the subproblem \alert{feasible}.
-
-    \smallskip
-    
-    \begin{block}{}
-        \begin{enumerate}
-            \item The original idea is due to \textcite{Vardi_1985}.
-            \item This version \alert{adapts} an idea from \textcite{Powell_1978a}.
-        \end{enumerate}
-    \end{block}
-\end{frame}
-
-\begin{frame}
-    \frametitle{The \citeauthor{Byrd_1987}-\citeauthor{Omojokun_1989} approach}
+    \frametitle{A new \citeauthor{Byrd_1987}-\citeauthor{Omojokun_1989} approach}
 
     To define the \alert{trial step}~$\step[k]$, we decompose~$\step[k] = \nstep[k] + \tstep[k]$, where
     \begin{enumerate}
@@ -771,10 +672,10 @@
             \begin{center}
                 \begin{tikzpicture}
                     % Linear constraints
-                    \uncover<1-6>{\fill[color=RoyalBlue,opacity=0.4] (-4,-1) -- (-1.5,-1) -- (-0.5,4) -- (-4,4) -- cycle;}
-                    \uncover<7>{\fill[color=RoyalBlue,opacity=0.4] (-4,-1) -- (-2.1,-1) -- (-1.1,4) -- (-4,4) -- cycle;}
-                    \uncover<1,2>{\fill[color=RoyalBlue,opacity=0.4] (-4,1) -- (0,4) -- (-4,4) -- cycle;}
-                    \uncover<3->{\fill[color=RoyalBlue,opacity=0.4] (-4,0.125) -- (1,3.875) -- (1,4) -- (-4,4) -- cycle;}
+                    \uncover<1,2,6->{\fill[color=RoyalBlue,opacity=0.4] (-4,-1) -- (-1.5,-1) -- (-0.5,4) -- (-4,4) -- cycle;}
+                    \uncover<3-5>{\fill[color=RoyalBlue,opacity=0.4] (-4,-1) -- (-2.1,-1) -- (-1.1,4) -- (-4,4) -- cycle;}
+                    \uncover<1,2,6>{\fill[color=RoyalBlue,opacity=0.4] (-4,1) -- (0,4) -- (-4,4) -- cycle;}
+                    \uncover<3-5,7->{\fill[color=RoyalBlue,opacity=0.4] (-4,0.125) -- (1,3.875) -- (1,4) -- (-4,4) -- cycle;}
         
                     % Trust regions
                     \begin{scope}
@@ -785,25 +686,30 @@
         
                     % Feasible region for the tangential subproblem
                     \begin{scope}
-                        \clip (-4,0.125) -- (-27/34,43/17) -- (-0.5,4) -- (-4,4) -- cycle;
-                        \uncover<4-6>{\fill[pattern=north west lines,opacity=0.7] (0,0) circle (3);}
+                        \clip (-4,0.125) -- (-1.5,2) -- (-1.1,4) -- (-4,4) -- cycle;
+                        \uncover<4-5>{\fill[pattern=north west lines,opacity=0.7] (0,0) circle (3);}
                     \end{scope}
                     \begin{scope}
-                        \clip (-4,0.125) -- (-1.5,2) -- (-1.1,4) -- (-4,4) -- cycle;
-                        \uncover<7>{\fill[pattern=north west lines,opacity=0.7] (0,0) circle (3);}
+                        \clip (-4,0.125) -- (-27/34,43/17) -- (-0.5,4) -- (-4,4) -- cycle;
+                        \uncover<8->{\fill[pattern=north west lines,opacity=0.7] (0,0) circle (3);}
                     \end{scope}
         
                     % Frame and annotations
                     \uncover<5>{
-                        \draw[-stealth,thick,OliveGreen] (-1.5,2) -- (-0.9,2.7);
-                        \node[below,xshift=5pt,text=OliveGreen] at (-1.2,2.35) {$\tstep[k]$};
+                        \draw[-stealth,thick,MidnightBlue] (-1.5,2) -- (-2.2,1.7);
+                        \node[below,xshift=9pt,text=MidnightBlue] at (-1.85,1.85) {$\tstep[k]$};
+                        \draw[-stealth,thick] (0,0) -- (-2.2,1.7);
+                        \node[below left] at (-1.1,0.85) {$\step[k]$};
+                    }
+                    \uncover<9>{
+                        \draw[-stealth,thick,MidnightBlue] (-1.5,2) -- (-0.9,2.7);
+                        \node[below,xshift=5pt,text=MidnightBlue] at (-1.2,2.35) {$\tstep[k]$};
                         \draw[-stealth,thick] (0,0) -- (-0.9,2.7);
                         \node[above right] at (-0.45,1.35) {$\step[k]$};
                     }
-                    \uncover<2->{
-                        \draw[-stealth,thick,Mahogany] (0,0) -- (-1.5,2);
-                        \node[below left,text=Mahogany] at (-0.75,1) {$\nstep[k]$};
-                    }
+                    \uncover<2->{\draw[-stealth,thick,Mahogany] (0,0) -- (-1.5,2);}
+                    \uncover<2-5>{\node[above right,text=Mahogany] at (-0.75,1) {$\nstep[k]$};}
+                    \uncover<6->{\node[below left,text=Mahogany] at (-0.75,1) {$\nstep[k]$};}
                     \draw[fill] (0,0) circle (1.4pt) node[below right] {$\iter[k]$};
                     \draw[thick] (-4,-1) rectangle (1,4);
                 \end{tikzpicture}
@@ -825,13 +731,13 @@
 
             \bigskip
 
-            Our \alert<1-6>{new} approach vs. the \alert<7>{standard}\footfullcite{Conn_Gould_Toint_2000} one.
+            The \alert<1-5>{standard}\footnote{See \textcite{Conn_Gould_Toint_2000}.} approach vs. our \alert<6->{new} one.
         \end{column}
     \end{columns}
 \end{frame}
 
 \begin{frame}
-    \frametitle{The \citeauthor{Byrd_1987}-\citeauthor{Omojokun_1989} approach (cont'd)}
+    \frametitle{A new \citeauthor{Byrd_1987}-\citeauthor{Omojokun_1989} approach (cont'd)}
 
     The \alert{normal step}~$\nstep[k]$ solves approximately
     \begin{align*}
@@ -841,25 +747,14 @@
     for some~$\zeta \in (0, 1)$ and the \alert{tangential step}~$\tstep[k]$ solves approximately
     \begin{align*}
         \min_{\step \in \R^n}   & \quad \big[ \nabla \obj(\iter[k]) + \nabla_{x, x}^2 \lag(\iter[k], \lm[k]) \nstep[k] \big]^{\T} \step + \frac{1}{2} \step^{\T} \nabla_{x, x}^2 \lag(\iter[k], \lm[k]) \step\\
-        \text{s.t.}             & \quad \nabla \con(\iter[k])^{\T} \step \le \only<1>{\textcolor{OliveGreen}{\negp{- \con(\iter[k]) - \nabla \con(\iter[k]) \nstep[k]}}}\only<2>{\textcolor{BurntOrange}{0}},\\
+        \text{s.t.}             & \quad \nabla \con(\iter[k])^{\T} \step \le \only<1>{\textcolor{BurntOrange}{0}}\only<2>{\textcolor{MidnightBlue}{\negp{- \con(\iter[k]) - \nabla \con(\iter[k]) \nstep[k]}}},\\
                                 & \quad \norm{\nstep[k] + \step} \le \rad[k].
     \end{align*}
-    
-    \begin{block}{}
-        \begin{enumerate}
-            \item The original idea is due to \textcite{Byrd_1987} and \textcite{Omojokun_1989}.
-            \item This is \only<1>{our \textcolor{OliveGreen}{\textbf{new}}}\only<2>{the \textcolor{BurntOrange}{\textbf{standard}}} approach.
-        \end{enumerate}
-    \end{block}
+
+    This is \only<1>{the \textcolor{BurntOrange}{\textbf{standard}}}\only<2>{our \textcolor{MidnightBlue}{\textbf{new}}} approach.
 \end{frame}
 
-% \begin{frame}
-%     \frametitle{A connection between the two approaches}
-    
-% 	To do.
-% \end{frame}
-
-\section{Our new DFO method COBYQA}
+\section{COBYQA \textemdash\ A derivative-free trust-region SQP method}
 
 \begin{frame}
     \frametitle{The problem addressed by our new DFO method}
@@ -872,25 +767,27 @@
     \end{align*}
     where derivatives of~$\obj$ and~$\con$ are \alert{unknown}.
 
-    \medskip
+    \bigskip
 
     \begin{block}{}
         \begin{enumerate}
-            \item The method also accepts equality constraints.
+            \item The method also accepts \alert{equality constraints}.
             \item The bound constraints are handled separately.
             \item Our goal is to design a \alert{successor} for COBYLA.
-            \item We want to release a stable \alert{implementation} of COBYQA.
+            \item We do not only design COBYQA but also implement it into a solver.
+            % \item We want to release a stable \alert{implementation} of COBYQA.
         \end{enumerate}
     \end{block}
 \end{frame}
 
 \begin{frame}
-    \frametitle{Inviolable bound constraints}
+    \frametitle{Why inviolable bound constraints?}
     
 	\begin{block}{}
         We assume that the bound constraints~$\xl \le x \le \xu$ are \alert{inviolable}.
         \begin{enumerate}
             \item $f$ and/or~$\con$ may \alert{not} be defined otherwise.
+            \item They often represent inalienable physical or theoretical restrictions.
             \item COBYQA must \alert{always} respect the bound constraints.
         \end{enumerate}
     \end{block}
@@ -902,23 +799,17 @@
         \item Hyperparameters in machine learning often admit inviolable bounds.
         \item Aircraft engine pylons must be beneath the wings.
     \end{enumerate}
-
-    \bigskip
-
-    \begin{block}{}
-        COBYQA also handles \alert{linear constraints} separately.
-    \end{block}
 \end{frame}
 
 \begin{frame}
     \frametitle{Interpolation-based quadratic models}
     
-	COBYQA models~$\obj$ (and~$\con$) by \alert{quadratic} interpolation.
+	We model~$\obj$ by \alert{quadratic} interpolation using the derivative-free PSB update.
 
     \medskip
 
-    \begin{block}{Derivative-free symmetric Broyden update}
-        The~$k$th model~$\objm[k]$ of~$\obj$ solves
+    \begin{block}{Derivative-free symmetric Broyden update \parencite{Powell_2004b}}
+        For each~$k = 0, 1, \dots$, the model~$\objm[k]$ of~$\obj$ solves
         \begin{align*}
             \min_{Q}    & \quad \norm[\big]{\nabla^2 \objm[k - 1] - \nabla^2 Q}_{\mathsf{F}}\\
             \text{s.t.} & \quad Q(y) = \obj(y), ~ y \in \xpt[k],
@@ -931,7 +822,7 @@
 
     \medskip
 
-    Similarly, we denote the~$k$th model of~$\con$ by~$\conm[k]$.
+    Similarly, we build the models~$\set{\conm[k]}_{k \ge 0}$ of~$\con$.
 \end{frame}
 
 \begin{frame}
@@ -945,16 +836,52 @@
     \end{align*}
     for some~$\lm[k]$ and~$\rad[k] > 0$, where~$\lagm[k](\iter, \lm) = \objm[k](\iter) + \lm^{\T} \conm[k](\iter)$.
 
-    \medskip
+    \bigskip
 
     \begin{block}{}
         \begin{enumerate}
             \item The subproblem is solved using our \alert{Byrd-Omojokun} approach.
             \item Usually,~$\iter[k] + \step[k]$ replaces a point in~$\xpt[k]$ to build~$\xpt[k + 1]$.
-            \item When necessary, the \alert{geometry} of~$\xpt[k + 1]$ is improved.
-            \item A lot of \alert{difficulties} are hidden here\dots
+            \item The \alert{trust-region radius} is updated as in the Powell's DFO methods.
         \end{enumerate}
     \end{block}
+\end{frame}
+
+\begin{frame}
+    \frametitle{This framework hides a lot of difficulties}
+
+    \begin{enumerate}
+        \item How to solve the trust-region subproblem in practice?
+        \item How to choose~$\lm[k]$?
+        \item Which merit function should we use?
+        \item How to update the penalty parameter(s)?
+        \item What if the set~$\xpt[k]$ is almost nonpoised?
+    \end{enumerate}
+
+    \medskip
+
+    \begin{center}
+        \begin{tikzpicture}
+            \draw[thick,rounded corners] (0,0) rectangle (3,1.5);
+            \draw[thick,rounded corners] (6,0) rectangle (9,1.5);
+            \draw[thick,Mahogany] (3,1) -- (4.4,1);
+            \draw[-stealth,thick,Mahogany] (4.6,1) -- (6,1);
+            \draw[thick,Mahogany] (4.3,0.9) -- (4.5,1.1);
+            \draw[thick,Mahogany] (4.5,0.9) -- (4.7,1.1);
+            \draw[thick,Mahogany] (6,0.5) -- (4.6,0.5);
+            \draw[-stealth,thick,Mahogany] (4.4,0.5) -- (3,0.5);
+            \draw[thick,Mahogany] (4.3,0.4) -- (4.5,0.6);
+            \draw[thick,Mahogany] (4.5,0.4) -- (4.7,0.6);
+            \node at (1.5,0.75) {\makecell{Model\\ management}};
+            \node at (7.5,0.75) {\makecell{Optimization\\ process}};
+            \node[above,text=Mahogany] at (4.5,1.1) {\small\emph{Contradict}};
+            \node[below,text=Mahogany] at (4.5,0.4) {\small\emph{each others}};
+        \end{tikzpicture}
+    \end{center}
+
+    \medskip
+
+    These problems are \alert{answered} for COBYQA.
 \end{frame}
 
 \begin{frame}
@@ -971,23 +898,23 @@
     \begin{block}{}
         \textcite{Powell_2006} wrote
         \begin{quote}
-            \enquote{The development of NEWUOA has taken nearly three years. The work was very frustrating [...]}
+            \enquote{The development of NEWUOA has taken nearly \alert{three years}. The work was very \alert{frustrating} [...]}
         \end{quote}
-        We felt similar frustration when developing COBYQA.
+        The development of COBYQA was not easier.
     \end{block}
 
     It will be included in
     \begin{enumerate}
         \item PDFO as a successor for COBYLA.
-        \item GEMSEO, industrial software package for MDO (from IRT Saint-Exup{\'{e}}ry).
+        \item GEMSEO, industrial software package for \alert{MDO} (from IRT Saint-Exup{\'{e}}ry).
     \end{enumerate}
 \end{frame}
 
 \begin{frame}
-    \frametitle{Comparison with existing DFO solvers}
+    \frametitle{Comparing COBYQA with existing DFO solvers}
     
 	\begin{enumerate}
-        \item All the experiments are based on
+        \item We assess the quality of points based on
         \begin{empheq}[left={\merit(\iter) = \empheqlbrace}]{alignat*=2}
             & \obj(\iter)                           && \quad \text{if~$v_{\infty}(x) \le 10^{-10}$,}\\
             & \infty                                && \quad \text{if~$v_{\infty}(x) \ge 10^{-5}$,}\\
@@ -999,33 +926,10 @@
         % \item We show the performance profiles for the tolerance~$\tau = 10^{-4}$.
         \item For problems with \alert{inviolable} bounds, we set
         \begin{equation*}
-            \obj(\iter) = \infty \quad \text{if~$\xl \nleq \iter$ or~$\iter \nleq \xu$.}
+            \obj(\iter) = \infty \quad \text{if~$\xl \nleq \iter$ or~$\iter \nleq \xu$,}
         \end{equation*}
+        so that methods that do not respect the bounds do not break down.
     \end{enumerate}
-\end{frame}
-
-\begin{frame}
-    \frametitle{Performance on unconstrained problems}
-
-	We make the following comparison on \alert{unconstrained} problems.
-
-    \medskip
-
-    \begin{center}
-        \drawperformanceprofiles{{"COBYQA","NEWUOA","COBYLA"}}{plain-1-50-perf-cobyla-cobyqa-newuoa-u.csv}{4}
-    \end{center}
-\end{frame}
-
-\begin{frame}
-    \frametitle{Performance on unconstrained problems}
-
-	We make the following comparison on \alert{unconstrained} problems.
-
-    \medskip
-
-    \begin{center}
-        \drawperformanceprofiles{{"COBYQA","NEWUOA","COBYLA"}}{plain-1-50-perf-cobyla-cobyqa-newuoa-u.csv}{4}
-    \end{center}
 \end{frame}
 
 \begin{frame}
@@ -1037,23 +941,6 @@
 
     \begin{center}
         \drawperformanceprofiles{{"COBYQA","BOBYQA","COBYLA"}}{plain-1-50-perf-bobyqa-cobyla-cobyqa-b.csv}{4}
-    \end{center}
-\end{frame}
-
-\begin{frame}
-    \frametitle{Performance on linearly constrained problems}
-
-	We make the following comparison on
-    \begin{enumerate}[<+->]
-        \item \alert{linearly constrained} problems,
-        \item with \alert{inviolable} bounds.
-    \end{enumerate}
-
-    \medskip
-
-    \begin{center}
-        \only<1>{\drawperformanceprofiles{{"COBYQA","LINCOA","COBYLA"}}{plain-1-50-perf-cobyla-cobyqa-lincoa-nl.csv}{4}}%
-        \only<2>{\drawperformanceprofiles{{"COBYQA","LINCOA","COBYLA"}}{plain-1-50-perf-cobyla-cobyqa-lincoa-nl-bounds.csv}{4}}
     \end{center}
 \end{frame}
 
@@ -1095,47 +982,51 @@
     \begin{enumerate}
         \item \alert{PDFO}, a new interface for using Powell's DFO solvers.
         \begin{enumerate}
-            \item It has been downloaded more than \num{40000} times.
+            \item It has been downloaded more than \alert{\num{40000} times}.
             \item It is included in the GEMSEO package.
         \end{enumerate}
-        \item An investigation of the~\alert{$\Lambda$-poisedness} of a particular set.
-        \item New developments in the \alert{SQP method}.
+        \item A theory on the \alert{optimality} of a particular interpolation set.
+        \item New perspectives and developments in the \alert{SQP method}.
         \item Our new DFO method \alert{COBYQA}.
         \begin{enumerate}
-            \item It will be included in the PDFO and GEMSEO packages.
             \item Numerical experiments show that COBYQA is a \alert{good successor} for COBYLA.
-            \item Fran{\c{c}}ois Gallard from IRT Saint-Exup{\'{e}}ry sent us (by email)
+            \item Dr.\ Gallard (MDO architect) from IRT Saint-Exup{\'{e}}ry sent us
         \end{enumerate}
     \end{enumerate}
 
     \smallskip
 
-    \begin{quote}
-        \small\enquote{I have given it a try and compared with COBYLA on some problems we have (without derivatives), it is significantly faster, provides a better convergence.}
-    \end{quote}
+    \begin{block}{}
+        \begin{quote}
+            \small\enquote{I have given it a try and compared with COBYLA on some problems we have (without derivatives), it is significantly faster, provides a better convergence.}
+        \end{quote}
+    \end{block}
 \end{frame}
 
 \begin{frame}
     \frametitle{Future research directions}
 
-	In the future, we will do the following.
+    Our thesis opens the door to several interesting future research directions.
     \begin{enumerate}
-        \item Look into the \alert{implications} of our new result on the SQP subproblem.
+        \item Study the \alert{convergence} properties of COBYQA.
         \begin{enumerate}
-            \item What are the connections with \alert{manifold optimization}?
-            \item Does it have practical implications?
-        \end{enumerate}
-        \item Study the \alert{convergence properties} of COBYQA.
-        \begin{enumerate}
+            \item We followed Powell's philosophy when developing COBYQA.
             \item Prove the global convergence of the method.
             \item What is the local convergence rate of COBYQA?
+            \item Could we simultaneously have results for COBYLA?
         \end{enumerate}
-        \item Improve further the \alert{implementation} of COBYQA.
+        \item Look into the \alert{implications} of our new result on the SQP subproblem.
         \begin{enumerate}
-            \item The implementation is very complex due to the nature of DFO.
-            \item How to make it as performant as LINCOA on linearly-constrained problems?
-            \item Implement it in modern Fortran (F2018 or above).
+            \item How does it connect to \alert{manifold optimization}?
+            \item Are these connections related to some convergence theory of COBYQA?
         \end{enumerate}
+        \item \dots
+        % \item Improve further the \alert{implementation} of COBYQA.
+        % \begin{enumerate}
+        %     \item The implementation is very complex due to the nature of DFO.
+        %     \item How to make it as performant as LINCOA on linearly constrained problems?
+        %     \item Implement it in modern Fortran (F2018 or above).
+        % \end{enumerate}
     \end{enumerate}
 \end{frame}
 

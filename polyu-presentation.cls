@@ -28,22 +28,33 @@
 \usetheme{Boadilla}
 \usecolortheme{seahorse}
 \usefonttheme{professionalfonts}
-% \setbeamertemplate{footline}{
-%     \leavevmode%
-%     \hbox{%
-%         \begin{beamercolorbox}[wd=0.333333\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
-%             \usebeamerfont{author in head/foot}\insertshortauthor~(\insertshortinstitute)
-%         \end{beamercolorbox}%
-%         \begin{beamercolorbox}[wd=0.333333\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
-%             \usebeamerfont{title in head/foot}\insertshorttitle
-%         \end{beamercolorbox}%
-%         \begin{beamercolorbox}[wd=0.333333\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}%
-%             \usebeamerfont{date in head/foot}\insertshortsubtitle\hspace*{2em}
-%             \usebeamertemplate{page number in head/foot}\hspace*{2ex}
-%         \end{beamercolorbox}%
-%     }%
-%     \vskip0pt%
-% }
+
+% Remove the pagination from footer
+\def\removepagination{%
+    \setbeamertemplate{footline}{%
+    \leavevmode%
+    \hbox{%
+        \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
+            \usebeamerfont{author in head/foot}\insertshortauthor\expandafter\ifblank\expandafter{\beamer@shortinstitute}{}{~~(\insertshortinstitute)}
+        \end{beamercolorbox}%
+        \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
+            \usebeamerfont{title in head/foot}\insertshorttitle
+        \end{beamercolorbox}%
+        \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,leftskip=2ex,rightskip=2ex,sep=0pt]{date in head/foot}%
+            \hfill%
+            \usebeamerfont{date in head/foot}%
+            \insertshortdate{}%
+            \hfill%
+            \usebeamercolor[fg]{page number in head/foot}%
+            \usebeamerfont{page number in head/foot}%
+            \phantom{\usebeamertemplate{page number in head/foot}}%
+        \end{beamercolorbox}%
+    }%
+    \vskip0pt%
+    }%
+}
+% TODO: It would be cleaner to add an option 'nopagination' to the frame environment.
+\newenvironment{framenopagination}[1][]{\bgroup\removepagination\begin{frame}}{\end{frame}\egroup\addtocounter{framenumber}{-1}}
 
 % Modify beamer default template
 \setbeamertemplate{navigation symbols}{}
@@ -207,7 +218,12 @@
 % Set up SI units
 \RequirePackage{siunitx}
 \sisetup{
+    group-minimum-digits=4,
     group-separator={,},
+    mode=text,
+    reset-text-family=false,
+    reset-text-series=false,
+    reset-text-shape=false,
 }
 
 % Bibliography information processing
@@ -231,12 +247,20 @@
 }{\endlist}{\item}
 \DeclareNameAlias{author}{family-given}
 
+% Place a titlepage at the beginning of the document
+\AtBeginDocument{
+    \begin{framenopagination}
+        \titlepage
+    \end{framenopagination}
+}
+
 % Place a partial table of contents at the beginning of each section
 \AtBeginSection[]{
-	\begin{frame}
+	\begin{framenopagination}
         \frametitle{Table of contents}
+
 		\tableofcontents[currentsection,hideallsubsections]
-	\end{frame}
+	\end{framenopagination}
 }
 
 % Email field
