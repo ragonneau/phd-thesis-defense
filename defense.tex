@@ -127,7 +127,7 @@
         \begin{enumerate}
             \item $f$ may be smooth, but derivatives \alert{cannot} be evaluated.
             \item Each function evaluation is \alert{expensive}.
-            \item The number of function evaluations measures the \alert{computational cost}.
+            \item The \alert{computational cost} is the number of function evaluations.
             \item Do \alert{not} use DFO if any kind of first order information is available.
         \end{enumerate}
     \end{block}
@@ -140,7 +140,7 @@
         \item Academic examples
         \begin{enumerate}
             \item Automatic error analysis \parencite{Higham_1993,Higham_2002}.
-            \item Tuning nonlinear optimization methods \parencite{Audet_Orban_2006}.
+            \item Optimization methods tuning \parencite{Audet_Orban_2006}.
             \item \dots
         \end{enumerate}
         \item Engineering and industrial examples
@@ -500,7 +500,7 @@
         \begin{equation*}
             \Lambda_p \in \big[ 1 + (2n + 1 - m)^{\frac{p - 1}{p}},  n \big],
         \end{equation*}
-        where we define~$0^0 = 0$.
+        with~$0^0 = 0$.
         Moreover, the lower bound is \alert{attained} if~$p \in \set{1, 2}$.
     \end{block}
 
@@ -553,7 +553,7 @@
     In particular, we can show that for~$p \in [1, 2]$, we have~$\Lambda_p = 1$.
 
     \begin{block}{}
-        Because~$\mathcal{Z}_m \subseteq \mathcal{B}_p(\delta)$,~$m = 2n + 1$ is \alert{optimal} for~$\mathcal{Z}_m$ when~$p \in [1, 2]$.
+        Because~$\mathcal{Z}_m \cap \mathcal{B}_p(\delta) \neq \emptyset$,~$m = 2n + 1$ is \alert{optimal} for~$\mathcal{Z}_m$ when~$p \in [1, 2]$.
     \end{block}
 \end{frame}
 
@@ -757,7 +757,7 @@
 \section{COBYQA \textemdash\ A derivative-free trust-region SQP method}
 
 \begin{frame}
-    \frametitle{The problem addressed by our new DFO method}
+    \frametitle{The problem addressed by COBYQA}
     
 	We design a method named \alert{COBYQA} to solve
     \begin{align*}
@@ -774,8 +774,7 @@
             \item The method also accepts \alert{equality constraints}.
             \item The bound constraints are handled separately.
             \item Our goal is to design a \alert{successor} for COBYLA.
-            \item We do not only design COBYQA but also implement it into a solver.
-            % \item We want to release a stable \alert{implementation} of COBYQA.
+            \item We do not only design COBYQA but also \alert{implement} it into a solver.
         \end{enumerate}
     \end{block}
 \end{frame}
@@ -822,7 +821,7 @@
 
     \medskip
 
-    Similarly, we build the models~$\set{\conm[k]}_{k \ge 0}$ of~$\con$.
+    Similarly, we build the quadratic models~$\set{\conm[k]}_{k \ge 0}$ of~$\con$.
 \end{frame}
 
 \begin{frame}
