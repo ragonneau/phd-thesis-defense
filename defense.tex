@@ -939,7 +939,7 @@
     \medskip
 
     \begin{center}
-        \drawperformanceprofiles{{"COBYQA","BOBYQA","COBYLA"}}{plain-1-50-perf-bobyqa-cobyla-cobyqa-b.csv}{4}
+        \drawperformanceprofiles{{"COBYQA","BOBYQA","COBYLA","PY-BOBYQA"}}{plain-1-50-perf-bobyqa-cobyla-cobyqa-py-bobyqa-b.csv}{4}
     \end{center}
 \end{frame}
 
@@ -1038,6 +1038,38 @@
 \end{frame}
 
 \begin{frame}
+    \frametitle{Performance on bound-constrained problems}
+
+	We make the following comparison on
+    \begin{enumerate}
+        \item \alert{bound-constrained} problems,
+        \item replacing~$\obj$ with~$[1 + \epsilon(\iter)] \obj(\iter)$ where~$\epsilon(x) \sim N(0, \sigma^2)$,~$\sigma = 10^{-2}$.
+    \end{enumerate}
+
+    \medskip
+
+    \begin{center}
+        \drawperformanceprofiles{{"COBYQA","BOBYQA","COBYLA"}}{noisy-1-50-2-perf-bobyqa-cobyla-cobyqa-b.csv}{1}
+    \end{center}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Performance on nonlinearly constrained problems}
+
+	We make the following comparison on
+    \begin{enumerate}
+        \item \alert{nonlinearly constrained} problems,
+        \item replacing~$\obj$ with~$[1 + \epsilon(\iter)] \obj(\iter)$ where~$\epsilon(x) \sim N(0, \sigma^2)$,~$\sigma = 10^{-2}$.
+    \end{enumerate}
+
+    \medskip
+
+    \begin{center}
+        \drawperformanceprofiles{{"COBYQA","COBYLA"}}{noisy-1-50-2-perf-cobyla-cobyqa-qo.csv}{1}
+    \end{center}
+\end{frame}
+
+\begin{frame}
     \frametitle{Hyperparameter tuning using COBYQA}
 
     The results on the \enquote{\alert{\only<1>{splice}\only<2>{ijcnn1}}} dataset are summarized below.
@@ -1073,38 +1105,6 @@
                 \bottomrule
             \end{tabular}
         }
-    \end{center}
-\end{frame}
-
-\begin{frame}
-    \frametitle{Performance on bound-constrained problems}
-
-	We make the following comparison on
-    \begin{enumerate}
-        \item \alert{bound-constrained} problems,
-        \item replacing~$\obj$ with~$[1 + \epsilon(\iter)] \obj(\iter)$ where~$\epsilon(x) \sim N(0, \sigma^2)$,~$\sigma = 10^{-2}$.
-    \end{enumerate}
-
-    \medskip
-
-    \begin{center}
-        \drawperformanceprofiles{{"COBYQA","BOBYQA","COBYLA"}}{noisy-1-50-2-perf-bobyqa-cobyla-cobyqa-b.csv}{2}
-    \end{center}
-\end{frame}
-
-\begin{frame}
-    \frametitle{Performance on nonlinearly constrained problems}
-
-	We make the following comparison on
-    \begin{enumerate}
-        \item \alert{nonlinearly constrained} problems,
-        \item replacing~$\obj$ with~$[1 + \epsilon(\iter)] \obj(\iter)$ where~$\epsilon(x) \sim N(0, \sigma^2)$,~$\sigma = 10^{-2}$.
-    \end{enumerate}
-
-    \medskip
-
-    \begin{center}
-        \drawperformanceprofiles{{"COBYQA","COBYLA"}}{noisy-1-50-2-perf-cobyla-cobyqa-qo.csv}{2}
     \end{center}
 \end{frame}
 
