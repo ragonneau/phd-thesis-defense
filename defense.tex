@@ -86,8 +86,8 @@
 \title[Model-Based DFO Methods and Software]{Model-Based Derivative-Free Optimization Methods and Software}
 \subtitle{}
 \author[Tom M. Ragonneau]{\texorpdfstring{
-    Tom M. Ragonneau\\
-    \footnotesize Co-supervised by Dr.\ Zaikun Zhang and Prof.\ Xiaojun Chen
+    \href{https://www.tomragonneau.com/}{Tom M. Ragonneau}\\
+    \footnotesize Co-supervised by Dr.\ \href{https://www.zhangzk.net/}{Zaikun Zhang} and Prof.\ \href{https://www.polyu.edu.hk/ama/staff/xjchen/ChenXJ.htm}{Xiaojun Chen}
 }{Tom M. Ragonneau}}
 \institute[PolyU AMA]{
     Department of Applied Mathematics\\
@@ -113,10 +113,10 @@
     \begin{center}
         \begin{tikzpicture}
             \draw[rounded corners,fill] (0,0) rectangle (3,1);
-            \node[text=white] at (1.5,0.5) {$\obj : \R^n \to \R$};
             \draw[-stealth,thick] (-1.5,0.5) -- (0,0.5);
-            \node[left] at (-1.5,0.5) {$\iter \in \R^n$};
             \draw[-stealth,thick] (3,0.5) -- (4.5,0.5);
+            \node[text=white] at (1.5,0.5) {$\obj : \R^n \to \R$};
+            \node[left] at (-1.5,0.5) {$\iter \in \R^n$};
             \node[right] at (4.5,0.5) {$\obj(\iter)$};
         \end{tikzpicture}
     \end{center}
@@ -257,7 +257,7 @@
         \item having \alert{theoretical} understanding of existing DFO techniques,
         \item exploring more advanced \alert{methodologies} in DFO,
         \item designing new DFO \alert{algorithms}, and
-        \item producing \alert{software packages} (necessary to make an \alert{impact}, but \alert{hard}).
+        \item producing \alert{software} packages (necessary to make an \alert{impact}, but \alert{hard}).
     \end{enumerate}
 \end{frame}
 
@@ -281,7 +281,7 @@
     \bigskip
 
     \begin{center}
-        \begin{tabular}{lll}
+        \begin{tabular}{@{}lll@{}}
             \toprule
             Solver  & Feasible set~$\Omega$                                 & References\\
             \midrule
@@ -309,7 +309,7 @@
 
     \bigskip
 
-    \begin{block}{An obstacle to using Powell’s DFO solvers}
+    \begin{block}{An obstacle to using Powell's DFO solvers}
         Powell implemented them in \alert{Fortran 77}\dots
     \end{block}
 \end{frame}
@@ -321,7 +321,7 @@
         \alert{PDFO} is a \alert{cross-platform} package interfacing Powell's DFO solvers.
         \begin{enumerate}
             \item PDFO \alert{preprocesses} the user's inputs.
-            \item Several \alert{bugs} in the original Fortran code are \alert{patched}.
+            \item Several \alert{bugs} in the original Fortran code are \alert{patched} in PDFO.
         \end{enumerate}
     \end{block}
 
@@ -333,10 +333,10 @@
         \item The package has been downloaded more than \alert{\num{40000} times}.
     \end{enumerate}
 
-    \medskip
+    \smallskip
     
 	\begin{center}
-        \href{https://www.pdfo.net/}{\includegraphics[width=0.8in]{images/qr/pdfo.png}}
+        \href{https://www.pdfo.net/}{\includegraphics[width=0.7in]{images/qr/pdfo.png}}
 
         \scriptsize\url{https://www.pdfo.net/}
     \end{center}
@@ -353,7 +353,7 @@
         \item We run the experiment on two different datasets.
     \end{enumerate}
 
-    \medskip
+    \bigskip
 
     \begin{center}
         \begin{tabular}{@{}cS[table-format=2]S[table-format=5]@{}}
@@ -419,7 +419,7 @@
         for some \alert{interpolation set}~$\xpt[k] = \set{y^1, y^2, \dots, y^m} \subseteq \R^n$, updated iteratively.
     \end{block}
 
-    The~\alert{$\Lambda$-poisedness} of~$\xpt[k]$ plays a crucial role when bounding the model error.
+    The~\alert{$\Lambda$-poisedness} of~$\xpt[k]$ plays a crucial role in bounding the model error.
 
     \begin{block}{$\Lambda$-poisedness \parencite{Conn_Scheinberg_Vicente_2009b}}
         The set~$\xpt[k]$ is said \alert{$\Lambda$-poised} in a compact set~$\mathcal{C} \subseteq \R^n$ if~$\Lambda \ge \Lambda_{\mathcal{C}}$, with
@@ -587,7 +587,7 @@
     \frametitle{A new interpretation of the SQP subproblem}
     
 	\begin{enumerate}
-        \item Assume for simplicity that the problem's constraints are~$\con(\iter) = 0$.
+        \item Assume for simplicity that the constraints are~$\con(\iter) = 0$.
         \item For some~$\bar{\iter}$ and~$\bar{\lm}$, define
         \setlength{\belowdisplayskip}{8pt}
         \begin{equation*}
@@ -643,7 +643,7 @@
     \begin{align*}
         \min_{\step \in \R^n}   & \quad \nabla \obj(\iter[k])^{\T} \step + \frac{1}{2} \step^{\T} \nabla_{x, x}^2 \lag(\iter[k], \lm[k]) \step\\
         \text{s.t.}             & \quad \con(\iter[k]) + \nabla \con(\iter[k]) \step \le 0,\\
-                                & \quad \textcolor{RedViolet}{\norm{\step} \le \rad[k]}
+                                & \quad \textcolor{MidnightBlue}{\norm{\step} \le \rad[k]}
     \end{align*}
     for some~$\lm[k]$ and~$\rad[k] > 0$.
     Given a \alert{merit function}~$\merit$, we then set
@@ -729,6 +729,10 @@
                     \fill[pattern=north west lines,opacity=0.7] (-.2,-2) rectangle (.2,-1.6);
                     \node[right] at (.4,-1.8) {Feasible region for~$\tstep[k]$};
                 }
+                \uncover<10>{
+                    \fill[pattern=north east lines,opacity=0.7] (-.2,-2.6) rectangle (.2,-2.2);
+                    \node[right] at (.4,-2.4) {Extra feasible region for~$\tstep[k]$};
+                }
             \end{tikzpicture}
         \end{column}
     \end{columns}
@@ -744,22 +748,21 @@
 \begin{frame}
     \frametitle{A new \citeauthor{Byrd_1987}-\citeauthor{Omojokun_1989} approach (cont'd)}
 
-    % TODO: \footnote{See \textcite{Conn_Gould_Toint_2000}.}
-    The mathematics of \only<1>{the \textcolor{BurntOrange}{\textbf{standard}}}\only<2>{our \textcolor{MidnightBlue}{\textbf{new}}} approach are as follows.
-
-    \medskip
-
-    The \alert{normal step}~$\nstep[k]$ solves approximately
-    \begin{align*}
-        \min_{\step \in \R^n}   & \quad \norm[\big]{\posp{\con(\iter[k]) + \nabla \con(\iter[k]) \step}},\\
-        \text{s.t.}             & \quad \norm{\step} \le \zeta \rad[k]
-    \end{align*}
-    for some~$\zeta \in (0, 1)$ and the \alert{tangential step}~$\tstep[k]$ solves approximately
-    \begin{align*}
-        \min_{\step \in \R^n}   & \quad \big[ \nabla \obj(\iter[k]) + \nabla_{x, x}^2 \lag(\iter[k], \lm[k]) \nstep[k] \big]^{\T} \step + \frac{1}{2} \step^{\T} \nabla_{x, x}^2 \lag(\iter[k], \lm[k]) \step\\
-        \text{s.t.}             & \quad \nabla \con(\iter[k])^{\T} \step \le \only<1>{\textcolor{BurntOrange}{0}}\only<2>{\textcolor{MidnightBlue}{\negp{- \con(\iter[k]) - \nabla \con(\iter[k]) \nstep[k]}}},\\
-                                & \quad \norm{\nstep[k] + \step} \le \rad[k].
-    \end{align*}
+    \begin{enumerate}
+        \item The mathematics of \only<1>{the \textcolor{BurntOrange}{\textbf{standard}}}\only<2>{our \textcolor{MidnightBlue}{\textbf{new}}} approach are as follows.
+        \item The \alert{normal step}~$\nstep[k]$ solves approximately
+        \begin{align*}
+            \min_{\step \in \R^n}   & \quad \norm[\big]{\posp{\con(\iter[k]) + \nabla \con(\iter[k]) \step}}\\
+            \text{s.t.}             & \quad \norm{\step} \le \zeta \rad[k]
+        \end{align*}
+        for some~$\zeta \in (0, 1)$.
+        \item The \alert{tangential step}~$\tstep[k]$ solves approximately
+        \begin{align*}
+            \min_{\step \in \R^n}   & \quad \big[ \nabla \obj(\iter[k]) + \nabla_{x, x}^2 \lag(\iter[k], \lm[k]) \nstep[k] \big]^{\T} \step + \frac{1}{2} \step^{\T} \nabla_{x, x}^2 \lag(\iter[k], \lm[k]) \step\\
+            \text{s.t.}             & \quad \nabla \con(\iter[k])^{\T} \step \le \only<1>{\textcolor{BurntOrange}{0}}\only<2>{\textcolor{MidnightBlue}{\negp{- \con(\iter[k]) - \nabla \con(\iter[k]) \nstep[k]}}},\\
+                                    & \quad \norm{\nstep[k] + \step} \le \rad[k].
+        \end{align*}
+    \end{enumerate}
 \end{frame}
 
 \section{COBYQA \textemdash\ A trust-region SQP DFO method (\textbf{algorithm} and \textbf{software})}
@@ -818,7 +821,7 @@
     \begin{block}{Derivative-free symmetric Broyden update \parencite{Powell_2004b}}
         For each~$k = 0, 1, \dots$, the model~$\objm[k]$ of~$\obj$ solves
         \begin{align*}
-            \min_{Q}    & \quad \textcolor{RedViolet}{\norm[\big]{\nabla^2 \objm[k - 1] - \nabla^2 Q}_{\mathsf{F}}}\\
+            \min_{Q}    & \quad \textcolor{MidnightBlue}{\norm[\big]{\nabla^2 \objm[k - 1] - \nabla^2 Q}_{\mathsf{F}}}\\
             \text{s.t.} & \quad Q(y) = \obj(y), ~ y \in \xpt[k],
         \end{align*}
         where~$\objm[-1] = 0$ and~$\xpt[k] \subseteq \R^n$ satisfies
@@ -859,17 +862,17 @@
 
     \begin{enumerate}
         \item What is~$\lm[k]$? 
-        We choose the least-squares Lagrange multiplier.
+        \textcolor{MidnightBlue}{\textit{We choose the least-squares Lagrange multiplier.}}
         \item Which merit function should we use? 
-        It uses the~$\ell_2$-merit function.
+        \textcolor{MidnightBlue}{\textit{It uses the~$\ell_2$-merit function.}}
         \item How to update the penalty parameter? 
-        It incorporates
+        \textcolor{MidnightBlue}{\textit{It incorporates}}
         \begin{enumerate}
-            \item a theoretical value that ensures the exactness of the merit function, and
-            \item a strategy used by Powell in COBYLA.
+            \item \textcolor{MidnightBlue}{\textit{a theoretical value that ensures the exactness of the merit function, and}}
+            \item \textcolor{MidnightBlue}{\textit{a strategy used by Powell in COBYLA.}}
         \end{enumerate}
-        \item What if the set~$\xpt[k]$ is almost nonpoised?
-        Central difficulty in the implementation of DFO methods.
+        \item What if~$\xpt[k]$ is almost nonpoised?
+        \textcolor{MidnightBlue}{\textit{Central difficulty of the implementation.}}
     \end{enumerate}
 
     \medskip
@@ -912,7 +915,7 @@
     We implemented COBYQA in \alert{Python} and made it \alert{publicly available}.
     
 	\begin{center}
-        \href{https://www.cobyqa.com/}{\includegraphics[width=0.8in]{images/qr/cobyqa.png}}
+        \href{https://www.cobyqa.com/}{\includegraphics[width=0.7in]{images/qr/cobyqa.png}}
 
         \scriptsize\url{https://www.cobyqa.com/}
     \end{center}
@@ -957,7 +960,7 @@
 	We make the following comparison on
     \begin{enumerate}[<+->]
         \item \alert{bound-constrained} problems,
-        \item adding noise to~$\obj$, with~$\sigma = 10^{-6}$.
+        \item adding \alert{noise} to~$\obj$, with~$\sigma = 10^{-6}$.
     \end{enumerate}
 
     \medskip
@@ -974,7 +977,7 @@
 	We make the following comparison on
     \begin{enumerate}[<+->]
         \item \alert{nonlinearly constrained} problems,
-        \item adding noise to~$\obj$, with~$\sigma = 10^{-6}$.
+        \item adding \alert{noise} to~$\obj$, with~$\sigma = 10^{-6}$.
     \end{enumerate}
 
     \medskip
@@ -990,7 +993,7 @@
 
 	We make the following comparison on \alert{all} problems.
 
-    \medskip
+    \bigskip
 
     \begin{center}
         \drawperformanceprofiles{{"COBYQA","COBYLA"}}{plain-1-50-perf-cobyla-cobyqa-ubnlqo.csv}{4}
@@ -1077,28 +1080,28 @@
         \only<1>{%
             \begin{tabular}{@{}cS[table-format=3]SSS@{}}
                 \toprule
-                Solver  & {No.\ eval.}  & {AUC score ($10^{-1}$)}   & {Accuracy ($10^{-1}$)}    & {Exec.\ time (\unit{s})}\\
+                Solver          & {No.\ eval.}  & {AUC score ($10^{-1}$)}   & {Accuracy ($10^{-1}$)}    & {Exec.\ time (\unit{s})}\\
                 \midrule
-                COBYQA  & 25            & 5.269                     & 5.300                     & 3.037\\
-                PDFO    & 65            & 9.568                     & 9.933                     & 3.697\\
-                RS      & 100           & 6.409                     & 5.300                     & 4.635\\
-                RS      & 300           & 7.880                     & 5.300                     & 13.763\\
-                TPE     & 100           & 5.000                     & 5.033                     & 4.889\\
-                TPE     & 300           & 7.736                     & 5.300                     & 15.726\\
+                COBYQA          & \bfseries 25  & 5.269                     & 5.300                     & \bfseries 3.037\\
+                \bfseries PDFO  & 65            & \bfseries 9.568           & \bfseries 9.933           & 3.697\\
+                RS              & 100           & 6.409                     & 5.300                     & 4.635\\
+                RS              & 300           & 7.880                     & 5.300                     & 13.763\\
+                TPE             & 100           & 5.000                     & 5.033                     & 4.889\\
+                TPE             & 300           & 7.736                     & 5.300                     & 15.726\\
                 \bottomrule
             \end{tabular}%
         }%
         \only<2>{%
             \begin{tabular}{@{}cS[table-format=3]SSS@{}}
                 \toprule
-                Solver  & {No.\ eval.}  & {AUC score ($10^{-1}$)}   & {Accuracy ($10^{-1}$)}    & {Exec. time (\unit{h})}\\
+                Solver              & {No.\ eval.}  & {AUC score ($10^{-1}$)}   & {Accuracy ($10^{-1}$)}    & {Exec. time (\unit{h})}\\
                 \midrule
-                COBYQA  & 48            & 9.896                     & 9.779                     & 0.453\\
-                PDFO    & 59            & 9.940                     & 9.819                     & 0.526\\
-                RS      & 100           & 9.886                     & 9.773                     & 1.231\\
-                RS      & 300           & 9.886                     & 9.773                     & 3.681\\
-                TPE     & 100           & 9.891                     & 9.791                     & 1.230\\
-                TPE     & 300           & 9.896                     & 9.786                     & 3.487\\
+                \bfseries COBYQA    & \bfseries 48  & 9.896                     & 9.779                     & \bfseries 0.453\\
+                PDFO                & 59            & \bfseries 9.940           & \bfseries 9.819           & 0.526\\
+                RS                  & 100           & 9.886                     & 9.773                     & 1.231\\
+                RS                  & 300           & 9.886                     & 9.773                     & 3.681\\
+                TPE                 & 100           & 9.891                     & 9.791                     & 1.230\\
+                TPE                 & 300           & 9.896                     & 9.786                     & 3.487\\
                 \bottomrule
             \end{tabular}
         }
