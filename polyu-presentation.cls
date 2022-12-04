@@ -134,7 +134,7 @@
 \RequirePackage{pgfplots}
 \RequirePackage{pgfplotstable}
 \RequirePackage{makecell}
-\usetikzlibrary{calc,decorations.pathreplacing,overlay-beamer-styles,patterns,shapes}
+\usetikzlibrary{calc,decorations.pathreplacing,overlay-beamer-styles,patterns,patterns.meta,shapes}
 \pgfplotsset{
     compat=1.18,
 }
