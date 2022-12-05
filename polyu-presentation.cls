@@ -65,6 +65,7 @@
 
 % Latin fonts
 \RequirePackage[T1]{fontenc}
+\RequirePackage[american]{babel}
 \RequirePackage{fontspec}
 \RequirePackage{csquotes}
 \setsansfont{FiraSans}[
@@ -234,6 +235,11 @@
     sortcites=false,
     maxcitenames=3,
 ]{biblatex}
+\DefineBibliographyStrings{american}{
+    bathesis={B\adddot A\adddotspace thesis},
+    mathesis={M\adddot A\adddotspace thesis},
+    phdthesis={Ph\adddot D\adddotspace thesis},
+}
 % \setbeamertemplate{bibliography item}[triangle]
 \defbibenvironment{bibliography}{
 	\list{}{
