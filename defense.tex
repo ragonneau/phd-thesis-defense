@@ -967,12 +967,6 @@
             \tilde{\obj}(x) = [1 + \epsilon(\iter)] \obj(\iter),
         \end{equation*}
         where~$\epsilon(x) \sim N(0, \sigma^2)$.
-        % \item We show the performance profiles for the tolerance~$\tau = 10^{-4}$.
-        % \item For problems with \alert{inviolable} bounds, we set
-        % \begin{equation*}
-        %     \obj(\iter) = \infty \quad \text{if~$\xl \nleq \iter$ or~$\iter \nleq \xu$,}
-        % \end{equation*}
-        % so that methods that do not respect the bounds do not break down.
     \end{enumerate}
 \end{frame}
 
@@ -1057,8 +1051,7 @@
 \begin{frame}
     \frametitle{Future research directions}
 
-    Our thesis prompts several interesting future research directions.\\
-    We provide below two examples.
+    We provide two interesting future research directions prompted by our thesis.
     \begin{enumerate}
         \item Study the \alert{convergence} properties of COBYQA.
         \begin{enumerate}
@@ -1071,12 +1064,6 @@
             \item Can it provide on insights into \alert{manifold optimization}?
             \item Can these insights help the analysis of COBYQA?
         \end{enumerate}
-        % \item Improve further the \alert{implementation} of COBYQA.
-        % \begin{enumerate}
-        %     \item The implementation is very complex due to the nature of DFO.
-        %     \item How to make it as performant as LINCOA on linearly constrained problems?
-        %     \item Implement it in modern Fortran (F2018 or above).
-        % \end{enumerate}
     \end{enumerate}
 \end{frame}
 
@@ -1097,12 +1084,17 @@
         \text{s.t.}                                                     & \quad y_i (\beta + \omega^{\T} \psi(x_i)) \ge 1 - \xi_i, ~ i = 1, 2, \dots, m,\\
                                                                         & \quad \xi \ge 0,
     \end{align*}
-    for a \alert{training dataset}~$\set{(x_i, y_i)}_{i = 1}^m \subseteq \R^n \times \set{\pm 1}$ and some~$\psi : \R^n \to \R^{\ell}$.\\
-    In our experiments, we have
-    \begin{equation*}
-        \psi(x_i)^{\T} \psi(x_j) = \exp(-\gamma \norm{x_i - x_j})^2,
-    \end{equation*}
-    and the \alert{hyperparameters} we consider are~$C$ and~$\gamma$.
+    for a \alert{training dataset}~$\set{(x_i, y_i)}_{i = 1}^m \subseteq \R^n \times \set{\pm 1}$ and some~$\psi : \R^n \to \R^{\ell}$.
+    
+    \medskip
+
+    \begin{block}{}
+        In our experiments, we have
+        \begin{equation*}
+            \psi(x_i)^{\T} \psi(x_j) = \exp(-\gamma \norm{x_i - x_j})^2,
+        \end{equation*}
+        and the \alert{hyperparameters} we consider are~$C$ and~$\gamma$.
+    \end{block}
 \end{frame}
 
 \begin{frame}
