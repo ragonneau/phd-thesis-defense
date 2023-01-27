@@ -15,7 +15,7 @@
 LC := latexmk
 LCFLAGS := -file-line-error -halt-on-error -interaction=nonstopmode -shell-escape
 
-SRC = $(wildcard talk*.tex)
+SRC = $(wildcard *.tex)
 OBJ = $(basename $(SRC))
 
 all: $(OBJ)
