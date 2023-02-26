@@ -93,14 +93,14 @@
     Department of Applied Mathematics\\
     The Hong Kong Polytechnic University
 }
-\date{December 6, 2022}
+\date[December 6, 2022]{December 6, 2022 (revised on \today)}
 \titlegraphic{}
 
 \begin{document}
 
 \begin{frame}
     \frametitle{What is DFO?}
-    
+
 	Derivative-free optimization (DFO) aims at solving
     \begin{equation*}
         \min_{\iter \in \fset \subseteq \R^n} \obj(x)
@@ -122,7 +122,7 @@
     \end{center}
 
     \medskip
-    
+
     \begin{block}{}
         \begin{enumerate}
             \item $f$ may be smooth, but derivatives \alert{cannot} be evaluated.
@@ -206,7 +206,7 @@
     \begin{block}{}
         Where to position the engines to \alert{maximize} the performance of an aircraft?
     \end{block}
-    
+
     \begin{center}
         \begin{tikzpicture}
             \draw[thick,rounded corners,pattern=north east lines,pattern color=DarkOrchid,fill opacity=0.3] (0,0) rectangle (3,1.5);
@@ -226,7 +226,7 @@
     \end{center}
 
     \vspace{-\bigskipamount}
-    
+
 	\begin{block}{}
         \begin{enumerate}
             \item Each component of the problem involves \alert{simulations}.
@@ -262,7 +262,7 @@
 
 \begin{framenopagination}
     \frametitle{Table of contents}
-    
+
 	\tableofcontents[hideallsubsections]
 \end{framenopagination}
 
@@ -333,7 +333,7 @@
     \end{enumerate}
 
     \smallskip
-    
+
 	\begin{center}
         \href{https://www.pdfo.net/}{\includegraphics[width=0.7in]{images/qr/pdfo.png}}
 
@@ -407,7 +407,7 @@
 
 \begin{frame}
     \frametitle{Interpolation-based methods and~$\Lambda$-poisedness}
-    
+
     \begin{block}{Interpolation-based methods}
         Many DFO methods construct a \alert{model}~$\objm[k]$ of~$\obj$ by \alert{interpolation}, with
         \setlength{\abovedisplayskip}{7pt}
@@ -435,7 +435,7 @@
 
 \begin{frame}
     \frametitle{How to choose the initial interpolation set?}
-    
+
     \begin{block}{}
         $\xpt[k + 1]$ is usually updated from~$\xpt[k]$.
         However, how to \alert{choose}~$\xpt[0]$?
@@ -479,7 +479,7 @@
                         \addplot[no marks] coordinates{(0, 0) (0, 1)};
                         \addplot[no marks] coordinates{(0, 0) (-1, 0)};
                         \addplot[no marks] coordinates{(0, 0) (0, -1)};
-                    \end{axis}  
+                    \end{axis}
                 \end{tikzpicture}
             \end{center}
         \end{column}
@@ -520,7 +520,7 @@
                 \addlegendentry{$p = 2$}
                 \addlegendentry{$p = 3$}
                 \addlegendentry{$p = 4$}
-            \end{axis}  
+            \end{axis}
         \end{tikzpicture}
     \end{center}
 \end{frame}
@@ -585,7 +585,7 @@
 
 \begin{frame}
     \frametitle{A new interpretation of the SQP subproblem}
-    
+
 	\begin{enumerate}
         \item Assume for simplicity that the constraints are~$\con(\iter) = 0$.
         \item For some~$\bar{\iter}$ and~$\bar{\lm}$, define
@@ -631,7 +631,7 @@
 
 \begin{frame}
     \frametitle{The trust-region SQP method}
-    
+
 	\begin{block}{}
         \begin{enumerate}
             \item The convergence properties of the SQP method are \alert{local}.
@@ -664,7 +664,7 @@
         \item the \alert{normal step}~$\nstep[k]$ reduces the (possible) constraint violation, and
         \item the \alert{tangential step}~$\tstep[k]$ reduces the objective function of the subproblem.
     \end{enumerate}
-    
+
     \begin{columns}
         \begin{column}{0.45\textwidth}
             \begin{center}
@@ -674,14 +674,14 @@
                     \uncover<3-5>{\fill[color=RoyalBlue,opacity=0.4] (-4,-1) -- (-2.1,-1) -- (-1.1,4) -- (-4,4) -- cycle;}
                     \uncover<1,2,6>{\fill[color=RoyalBlue,opacity=0.4] (-4,1) -- (0,4) -- (-4,4) -- cycle;}
                     \uncover<3-5,7->{\fill[color=RoyalBlue,opacity=0.4] (-4,0.125) -- (1,3.875) -- (1,4) -- (-4,4) -- cycle;}
-        
+
                     % Trust regions
                     \begin{scope}
                         \clip (-4,-1) rectangle (1,4);
                         \draw[fill=Dandelion,draw opacity=0.7,fill opacity=0.5] (0,0) circle (3);
                         \draw[densely dotted,fill=Dandelion,opacity=0.7] (0,0) circle (2.5);
                     \end{scope}
-        
+
                     % Feasible region for the tangential subproblem
                     \begin{scope}
                         \clip (-4,0.125) -- (-1.5,2) -- (-1.1,4) -- (-4,4) -- cycle;
@@ -698,7 +698,7 @@
                             \draw[thick,opacity=0.7] (-1.5,2) -- (-1.365785,2.671073);
                             }
                     \end{scope}
-        
+
                     % Frame and annotations
                     \uncover<5>{
                         \draw[-stealth,thick,MidnightBlue] (-1.5,2) -- (-2.2,1.7);
@@ -771,7 +771,7 @@
         \item The \alert{tangential step}~$\tstep[k]$ solves approximately
         \begin{align*}
             \min_{\step \in \R^n}   & \quad \big[ \nabla \obj(\iter[k]) + \nabla_{x, x}^2 \lag(\iter[k], \lm[k]) \nstep[k] \big]^{\T} \step + \frac{1}{2} \step^{\T} \nabla_{x, x}^2 \lag(\iter[k], \lm[k]) \step\\
-            \text{s.t.}             & \quad \nabla \con(\iter[k])^{\T} \step \le \only<1>{\textcolor{BurntOrange}{0}}\only<2>{\textcolor{MidnightBlue}{\negp{- \con(\iter[k]) - \nabla \con(\iter[k]) \nstep[k]}}},\\
+            \text{s.t.}             & \quad \nabla \con(\iter[k])^{\T} \step \le \only<1>{\textcolor{BurntOrange}{0}}\only<2>{\textcolor{MidnightBlue}{\negp{\con(\iter[k]) + \nabla \con(\iter[k]) \nstep[k]}}},\\
                                     & \quad \norm{\nstep[k] + \step} \le \rad[k].
         \end{align*}
     \end{enumerate}
@@ -781,7 +781,7 @@
 
 \begin{frame}
     \frametitle{The problem addressed by COBYQA}
-    
+
 	We design a method named \alert{COBYQA} to solve
     \begin{align*}
         \min_{x \in \R^n}   & \quad \obj(x)\\
@@ -804,7 +804,7 @@
 
 \begin{frame}
     \frametitle{Why inviolable bound constraints?}
-    
+
 	\begin{block}{}
         We assume that the bound constraints~$\xl \le x \le \xu$ are \alert{inviolable}.
         \begin{enumerate}
@@ -825,7 +825,7 @@
 
 \begin{frame}
     \frametitle{Interpolation-based quadratic models}
-    
+
 	We model~$\obj$ by \alert{quadratic} interpolation using the derivative-free \alert{PSB} update.
 
     \medskip
@@ -894,7 +894,7 @@
 
 \begin{frame}
     \frametitle{A central difficulty in the implementation}
-    
+
     \begin{enumerate}
         \setcounter{enumi}{4}
         \item What if the interpolation set~$\xpt[k]$ is almost nonpoised?\\
@@ -935,7 +935,7 @@
     \end{block}
 
     We implemented COBYQA in \alert{Python} and made it \alert{publicly available}.
-    
+
 	\begin{center}
         \href{https://www.cobyqa.com/}{\includegraphics[width=0.7in]{images/qr/cobyqa.png}}
 
@@ -951,7 +951,7 @@
 
 \begin{frame}
     \frametitle{Comparing COBYQA with existing DFO solvers}
-    
+
 	\begin{enumerate}
         \item We assess the quality of points based on
         \begin{empheq}[left={\merit(\iter) = \empheqlbrace}]{alignat*=2}
@@ -1097,7 +1097,7 @@
                                                                         & \quad \xi \ge 0,
     \end{align*}
     for a \alert{training dataset}~$\set{(x_i, y_i)}_{i = 1}^m \subseteq \R^n \times \set{\pm 1}$ and some~$\psi : \R^n \to \R^{\ell}$.
-    
+
     \medskip
 
     \begin{block}{}
